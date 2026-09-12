@@ -1,0 +1,13 @@
+cmd_vel_to_sdk_node:
+  ros__parameters:
+    network_interface: "wlp2s0"       # Card WiFi kết nối tới Unitree G1 (wlp2s0)
+
+    cmd_vel_topic: "/cmd_vel"        # Topic vận tốc an toàn đã mượt từ Nav2 / Safety Watchdog
+    enable_sdk: true                 # Đặt false để chạy ở chế độ mô phỏng / log lệnh ra console
+    auto_stand_on_start: true        # Tự động gửi lệnh BalanceStand() khi node khởi chạy
+    cmd_send_rate_hz: 20.0           # Tần số phát lệnh Move sang Unitree SDK (Hz)
+
+    motion_mode_topic: "/g1_mode"     # Topic nhận lệnh chuyển Mode di chuyển/tư thế (String)
+    speed_mode: 0                    # Chế độ di chuyển (0: Đi bộ bình thường, 1: Chạy/Đi nhanh)
+    swing_height: 0.0                # Độ cao nhấc chân (mét, ví dụ 0.0 đến 0.2)
+

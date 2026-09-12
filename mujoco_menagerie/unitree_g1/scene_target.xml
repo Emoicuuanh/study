@@ -1,0 +1,10 @@
+<mujoco model="g1 ik scene">
+  <include file="scene.xml"/>
+
+  <worldbody>
+    <!-- Qua bong muc tieu: mocap = dieu khien truc tiep tu code, khong co vat ly -->
+    <body name="target" mocap="true" pos="0.35 -0.25 0.9">
+      <geom type="sphere" size="0.03" rgba="1 0.3 0.3 0.8" contype="0" conaffinity="0"/>
+    </body>
+  </worldbody>
+</mujoco>

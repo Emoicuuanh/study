@@ -1,0 +1,10 @@
+<mujoco model="g1 capture point scene">
+  <include file="scene.xml"/>
+
+  <worldbody>
+    <!-- Danh dau capture point tren san: mocap = ta tu dieu khien vi tri bang code -->
+    <body name="cp_marker" mocap="true" pos="0 0 0.01">
+      <geom type="cylinder" size="0.05 0.005" rgba="0.06 0.55 0.42 0.85" contype="0" conaffinity="0"/>
+    </body>
+  </worldbody>
+</mujoco>

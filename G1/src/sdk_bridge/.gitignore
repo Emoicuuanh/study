@@ -1,0 +1,18 @@
+# ROS 2 package gitignore
+build/
+install/
+log/
+
+# Python compilation outputs & eggs
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+
+# Editor & OS temporary files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*~

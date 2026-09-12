@@ -1,0 +1,97 @@
+=== TEST RUN VERIFICATION LOG FOR g1_bringup ===
+Date/Time: 2026-06-26 16:02:23
+Command: ros2 launch g1_bringup g1_bringup.launch.py model:=29dof
+
+Log Output:
+[g1_bringup] Loading G1 URDF file from: /home/hoangdc/ROS2/unitree_G1/dev_unitreeg1_ws/install/g1_description/share/g1_description/urdf/g1_29dof.urdf
+[INFO] [robot_state_publisher-1]: process started with pid [126652]
+[INFO] [lowstate_jointstate_bridge-2]: process started with pid [126654]
+[INFO] [static_transform_publisher-3]: process started with pid [126656]
+[static_transform_publisher-3] [INFO] [1782464538.291326627] [base_link_to_pelvis_publisher]: Spinning until killed publishing transform from 'base_link' to 'pelvis'
+[robot_state_publisher-1] Parsing robot urdf xml string.
+[robot_state_publisher-1] The root link pelvis has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[robot_state_publisher-1] Link imu_in_pelvis had 0 children
+[robot_state_publisher-1] Link left_hip_pitch_link had 1 children
+[robot_state_publisher-1] Link left_hip_roll_link had 1 children
+[robot_state_publisher-1] Link left_hip_yaw_link had 1 children
+[robot_state_publisher-1] Link left_knee_link had 1 children
+[robot_state_publisher-1] Link left_ankle_pitch_link had 1 children
+[robot_state_publisher-1] Link left_ankle_roll_link had 0 children
+[robot_state_publisher-1] Link pelvis_contour_link had 0 children
+[robot_state_publisher-1] Link right_hip_pitch_link had 1 children
+[robot_state_publisher-1] Link right_hip_roll_link had 1 children
+[robot_state_publisher-1] Link right_hip_yaw_link had 1 children
+[robot_state_publisher-1] Link right_knee_link had 1 children
+[robot_state_publisher-1] Link right_ankle_pitch_link had 1 children
+[robot_state_publisher-1] Link right_ankle_roll_link had 0 children
+[robot_state_publisher-1] Link waist_yaw_link had 1 children
+[robot_state_publisher-1] Link waist_roll_link had 1 children
+[robot_state_publisher-1] Link torso_link had 8 children
+[robot_state_publisher-1] Link d435_link had 0 children
+[robot_state_publisher-1] Link head_link had 0 children
+[robot_state_publisher-1] Link imu_in_torso had 0 children
+[robot_state_publisher-1] Link left_shoulder_pitch_link had 1 children
+[robot_state_publisher-1] Link left_shoulder_roll_link had 1 children
+[robot_state_publisher-1] Link left_shoulder_yaw_link had 1 children
+[robot_state_publisher-1] Link left_elbow_link had 1 children
+[robot_state_publisher-1] Link left_wrist_roll_link had 1 children
+[robot_state_publisher-1] Link left_wrist_pitch_link had 1 children
+[robot_state_publisher-1] Link left_wrist_yaw_link had 1 children
+[robot_state_publisher-1] Link left_rubber_hand had 0 children
+[robot_state_publisher-1] Link logo_link had 0 children
+[robot_state_publisher-1] Link mid360_link had 0 children
+[robot_state_publisher-1] Link right_shoulder_pitch_link had 1 children
+[robot_state_publisher-1] Link right_shoulder_roll_link had 1 children
+[robot_state_publisher-1] Link right_shoulder_yaw_link had 1 children
+[robot_state_publisher-1] Link right_elbow_link had 1 children
+[robot_state_publisher-1] Link right_wrist_roll_link had 1 children
+[robot_state_publisher-1] Link right_wrist_pitch_link had 1 children
+[robot_state_publisher-1] Link right_wrist_yaw_link had 1 children
+[robot_state_publisher-1] Link right_rubber_hand had 0 children
+[robot_state_publisher-1] Link waist_support_link had 0 children
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment d435_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment head_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment imu_in_pelvis
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment imu_in_torso
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_ankle_pitch_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_ankle_roll_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_elbow_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_hip_pitch_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_hip_roll_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_hip_yaw_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_knee_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_rubber_hand
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_shoulder_pitch_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_shoulder_roll_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_shoulder_yaw_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_wrist_pitch_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_wrist_roll_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment left_wrist_yaw_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment logo_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment mid360_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment pelvis
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment pelvis_contour_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_ankle_pitch_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_ankle_roll_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_elbow_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_hip_pitch_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_hip_roll_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_hip_yaw_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_knee_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_rubber_hand
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_shoulder_pitch_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_shoulder_roll_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_shoulder_yaw_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_wrist_pitch_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_wrist_roll_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment right_wrist_yaw_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment torso_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment waist_roll_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment waist_support_link
+[robot_state_publisher-1] [INFO] [robot_state_publisher]: got segment waist_yaw_link
+[lowstate_jointstate_bridge-2] [INFO] [lowstate_jointstate_bridge]: Subscribing to LowState topic: lowstate
+[lowstate_jointstate_bridge-2] [INFO] [lowstate_jointstate_bridge]: Publishing JointState topic: joint_states
+[lowstate_jointstate_bridge-2] [INFO] [lowstate_jointstate_bridge]: Successfully parsed robot_description URDF. Found 29 active joints matching G1 motor mappings.
+
+Conclusion:
+All nodes (robot_state_publisher, lowstate_jointstate_bridge, static_transform_publisher) started successfully and are running in the background without any exceptions. The URDF parsing dynamically successfully loaded all 29 active joints of the G1 robot.

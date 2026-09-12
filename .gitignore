@@ -10,15 +10,16 @@ __pycache__/
 *.pyo
 
 # ============================================================
-# REPO CUA NGUOI KHAC - clone rieng, xem README.md
-#   unitree_rl_gym   github.com/unitreerobotics/unitree_rl_gym
-#   mujoco_menagerie github.com/google-deepmind/mujoco_menagerie
-# Repo RIENG cua minh, giu doc lap:
-#   G1               github.com/Emoicuuanh/G1
+# Ba repo duoi day DUOC dua vao repo nay (vendored), nhung .git
+# goc cua chung da doi ten thanh .git-upstream de git cha khong
+# hieu nham la submodule. KHONG commit phan lich su do (216 MB).
+#
+# Muon pull ban moi tu upstream:
+#     mv unitree_rl_gym/.git-upstream unitree_rl_gym/.git
+#     git -C unitree_rl_gym pull
+#     mv unitree_rl_gym/.git unitree_rl_gym/.git-upstream
 # ============================================================
-unitree_rl_gym/
-mujoco_menagerie/
-G1/
+.git-upstream/
 
 # ============================================================
 # San pham bien dich - tao lai duoc, va chua duong dan TUYET DOI

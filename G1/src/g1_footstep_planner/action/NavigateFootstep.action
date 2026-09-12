@@ -1,0 +1,18 @@
+# Goal
+geometry_msgs/PoseStamped target_pose
+float32 vx_exec
+float32 vy_exec
+float32 wz_exec
+---
+# Result
+bool success
+string message
+float32 final_error_x
+float32 final_error_y
+float32 final_error_yaw
+---
+# Feedback
+string current_phase
+float32 percent_complete
+float32 time_remaining
+geometry_msgs/PoseStamped current_pose

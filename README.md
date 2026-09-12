@@ -3,6 +3,9 @@
 Nhật ký học và code thực hành về robot humanoid, từ điều khiển cổ điển
 đến SLAM/navigation, dùng Unitree G1 làm đối tượng.
 
+> Repo này chứa cả code của bên thứ ba (Unitree, DeepMind) để chạy được
+> ngay sau khi clone — xem mục *Code của bên thứ ba* bên dưới.
+
 Mỗi phần đều có số đo thật kèm theo — xem `g1_ws/docs/sotay.html` (sổ tay
 tổng hợp) và `INTERVIEW_QUESTIONS.md` (32 câu hỏi ôn phỏng vấn).
 
@@ -71,19 +74,37 @@ python3.13 -m venv .venv
 
 ---
 
-## Repo phụ thuộc — clone riêng
+## Code của bên thứ ba trong repo này
 
-Ba thư mục sau **không nằm trong repo này**:
+Ba thư mục dưới đây **không phải do mình viết**, được đưa vào để repo chạy
+được ngay sau khi clone. Bản quyền và giấy phép thuộc về tác giả gốc:
+
+| Thư mục | Nguồn | Giấy phép |
+|---|---|---|
+| `unitree_rl_gym/` | [unitreerobotics/unitree_rl_gym](https://github.com/unitreerobotics/unitree_rl_gym) | xem `unitree_rl_gym/LICENSE` |
+| `mujoco_menagerie/` | [google-deepmind/mujoco_menagerie](https://github.com/google-deepmind/mujoco_menagerie) | xem `mujoco_menagerie/LICENSE` |
+| `G1/` | [Emoicuuanh/G1](https://github.com/Emoicuuanh/G1) | repo riêng của mình |
+
+Trong đó:
+
+- `unitree_rl_gym` — policy `motion.pt` đã train, URDF 12 khớp, và code
+  triển khai lên robot thật (`deploy/deploy_real/`)
+- `mujoco_menagerie` — model MuJoCo của G1, dùng cho `week*.py`
+- `G1` — workspace ROS2 riêng: SDK bridge (`LocoClient`), kế hoạch navigation
+
+### Lịch sử git của chúng
+
+`.git` gốc của cả ba đã được đổi tên thành `.git-upstream` và **không**
+commit vào đây (216 MB). Muốn cập nhật từ upstream:
 
 ```bash
-git clone https://github.com/unitreerobotics/unitree_rl_gym.git
-git clone https://github.com/google-deepmind/mujoco_menagerie.git
-git clone https://github.com/Emoicuuanh/G1.git
+mv unitree_rl_gym/.git-upstream unitree_rl_gym/.git
+git -C unitree_rl_gym pull
+mv unitree_rl_gym/.git unitree_rl_gym/.git-upstream
 ```
 
-- `unitree_rl_gym` — policy `motion.pt` đã train và URDF 12 khớp
-- `mujoco_menagerie` — model MuJoCo của G1
-- `G1` — workspace ROS2 riêng (SDK bridge, kế hoạch navigation)
+Bước đổi tên lại là bắt buộc — nếu để nguyên `.git`, git cha sẽ coi thư mục
+đó là submodule và người clone về sẽ thấy thư mục rỗng.
 
 ---
 

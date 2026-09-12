@@ -1,0 +1,33 @@
+ndt_localization_node:
+  ros__parameters:
+    # ----------------------------------------------------
+    # Tọa độ và Khung tham chiếu
+    # ----------------------------------------------------
+    map_frame: "map"
+    odom_frame: "odom"
+    base_frame: "base_link"
+    map_pcd_path: "/home/hoangdc/ROS2/unitree_G1/maps/g1_office/g1_office_aligned_filter.pcd" # Đường dẫn file bản đồ PCD đã lưu và cân chỉnh trọng lực
+
+    # ----------------------------------------------------
+    # Cấu hình Thuật toán NDT (Tối ưu hóa tốc độ và độ chính xác)
+    # ----------------------------------------------------
+    ndt_resolution: 1.0 # Kích thước ô voxel cho phân phối chuẩn NDT (1.0m là tiêu chuẩn cho LiDAR ngoài trời/trong nhà rộng)
+    ndt_step_size: 0.1 # Cự ly dịch chuyển lớn nhất mỗi lần lặp Newton (m) (giúp hội tụ mượt ở giai đoạn tracking)
+    ndt_epsilon: 0.000001 # Điều kiện dừng: sai số tối thiểu giữa các lần lặp
+    ndt_max_iterations: 35 # Số lần lặp tối đa của Solver (đảm bảo khống chế thời gian xử lý)
+
+    # ----------------------------------------------------
+    # Tối ưu hóa dữ liệu & Bộ lọc
+    # ----------------------------------------------------
+    live_voxel_size: 0.3 # Downsample PointCloud đầu vào bằng Voxel Grid (m) (giảm tải CPU từ ~20k điểm xuống ~2k điểm)
+    max_fitness_score: 0.5 # Ngưỡng chấp nhận kết quả đối sánh (Gating). 2.0m cho phép tracking hội tụ liên tục khi xoay/di chuyển.
+
+    # ----------------------------------------------------
+    # Khởi tạo vị trí tự động (Auto-initialization) - Tùy chọn nâng cao
+    # ----------------------------------------------------
+    auto_initialize: false # Chuyển thành true nếu muốn tự động khởi tạo vị trí từ tham số dưới đây mà không cần bấm RViz
+    init_pose_x: 0.0 # Tọa độ X ban đầu (m) trong map
+    init_pose_y: 0.0 # Tọa độ Y ban đầu (m) trong map
+    init_pose_z: 0.0 # Tọa độ Z ban đầu (m) trong map
+    init_pose_yaw: 0.0 # Góc hướng ban đầu (rad) trong map
+

@@ -1,0 +1,89 @@
+# Configuration for Unitree G1 Bringup Launch
+developer_mode: true # Set to true for low-level control (publishes joint states & robot description), false for regular high-level control
+model: "29dof" # G1 model variant: '23dof' or '29dof'
+lowstate_topic: "lowstate" # Topic for LowState messages (e.g. 'lowstate' or 'lf/lowstate')
+sync_lidar_time: true # Whether to sync LiDAR timestamps with host PC time (true/false)
+use_state_estimator: true # Set to true to configure TFs for State Estimator (EKF), false for LIO-only mode
+
+# Static TF transforms: [x, y, z, yaw, pitch, roll, parent_frame, child_frame]
+# Rotation angles (yaw, pitch, roll) are in radians.
+static_transforms:
+  base_link_to_pelvis:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    yaw: 0.0
+    pitch: 0.0
+    roll: 0.0
+    parent_frame: "base_link"
+    child_frame: "pelvis"
+
+  mid360_to_livox:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    yaw: 0.0
+    pitch: 0.0
+    roll: 3.14159265
+    parent_frame: "mid360_link"
+    child_frame: "livox_frame"
+
+  body_to_base:
+    x: 0.03314
+    y: 0.02332
+    z: 0.41554
+    yaw: 0.0
+    pitch: -0.04014
+    roll: -3.14159
+    parent_frame: "body"
+    child_frame: "base_link"
+
+  odom_to_odom_livox:
+    x: 0.0
+    y: 0.0
+    z: 1.13124
+    yaw: 0.0
+    pitch: 0.0
+    roll: 0.0
+    parent_frame: "odom"
+    child_frame: "odom_livox"
+
+  odom_livox_to_camera_init:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    yaw: 0.0
+    pitch: 0.0
+    roll: 3.14159265
+    parent_frame: "odom_livox"
+    child_frame: "camera_init"
+
+  pelvis_to_dog_imu:
+    x: 0.04525
+    y: 0.0
+    z: -0.08339
+    yaw: 0.0
+    pitch: 0.0
+    roll: 0.0
+    parent_frame: "pelvis"
+    child_frame: "dog_imu_link"
+
+  base_link_to_body:
+    x: -0.04979
+    y: 0.02332
+    z: 0.41388
+    yaw: 0.0
+    pitch: -0.04014
+    roll: 3.14159
+    parent_frame: "base_link"
+    child_frame: "body"
+
+  odom_to_camera_init:
+    x: -0.01644
+    y: 0.02332
+    z: 0.41654
+    yaw: 0.0
+    pitch: -0.04014
+    roll: 3.14159
+    parent_frame: "odom"
+    child_frame: "camera_init"

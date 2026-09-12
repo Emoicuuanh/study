@@ -1,0 +1,57 @@
+/**:
+  ros__parameters:
+    # ----------------------------------------------------
+    # Tham số cơ bản & Tọa độ
+    # ----------------------------------------------------
+    tsdf_voxel_size: 0.10                # Kích thước mỗi ô voxel (m) - 10cm là đủ để nhận diện nền và chướng ngại vật
+    tsdf_voxels_per_side: 16             # Số ô voxel trên mỗi cạnh của một Block (phải là lũy thừa của 2)
+    world_frame: "odom"                  # Hệ tọa độ đích cục bộ liên tục (tránh giật lag khi Loop Closure cập nhật)
+    sensor_frame: "livox_frame"          # Frame ID của cảm biến LiDAR (khớp với TF của robot)
+    
+    # ----------------------------------------------------
+    # Thiết lập quét & Tích hợp tia laser
+    # ----------------------------------------------------
+    max_ray_length_m: 5.0                # Giới hạn tia laser ngắn hơn (5m) để giảm tải tính toán CPU
+    min_ray_length_m: 0.2                # Tầm hoạt động tối thiểu để loại bỏ các điểm laser thuộc cơ thể robot
+    allow_clear: true                    # Cho phép giải phóng vùng trống dọc theo tia chiếu laser
+    use_const_weight: false              # Trọng số suy giảm theo khoảng cách (tăng độ mịn bề mặt)
+    
+    # ----------------------------------------------------
+    # Tích hợp ESDF (Bản đồ khoảng cách chướng ngại vật)
+    # ----------------------------------------------------
+    generate_esdf: true                  # Bắt buộc bật để tính toán ESDF từ TSDF
+    publish_esdf_map: true               # Xuất bản bản đồ ESDF dưới dạng PointCloud để quan sát
+    esdf_max_distance_m: 2.0             # Khoảng cách tối đa cần tính ESDF (2.0m là đủ để tránh chướng ngại vật)
+    
+    # ----------------------------------------------------
+    # Tần số cập nhật & Cục bộ hóa bản đồ (Rolling Map)
+    # ----------------------------------------------------
+    update_mesh_every_n_sec: 0.2         # Tần số cập nhật mesh 3D cục bộ (5Hz) để hiển thị mượt mà
+    update_esdf_every_n_sec: 0.2         # Tần số cập nhật ESDF (5Hz) phục vụ tránh chướng ngại vật thời gian thực
+    publish_tsdf_map: false              # Không publish mây điểm TSDF thô
+    publish_slices: true                 # Xuất bản lát cắt 2D của bản đồ cục bộ
+    slice_level: 0.0                     # Độ cao lát cắt (0.0m là ngang tầm chân/đùi robot)
+    max_block_distance_from_body: 5.0    # Giới hạn bản đồ cục bộ quanh robot (tự động xóa các block xa hơn 5m)
+
+    # ----------------------------------------------------
+    # Tham số cấu hình nâng cao (Mặc định)
+    # ----------------------------------------------------
+    truncation_distance: 0.4             # Khoảng cắt TSDF (m) (tsdf_voxel_size * 4)
+    max_weight: 10000.0                  # Trọng số tích lũy tối đa cho mỗi voxel (giảm xuống 100 nếu muốn phản ứng vật cản động nhanh)
+    use_weight_dropoff: true             # Giảm trọng số của các điểm phía sau bề mặt vật cản để tránh bóng ma
+    voxel_carving_enabled: true          # Xóa các vật thể động đã di chuyển đi nơi khác
+    anti_grazing: false                  # Chống quét sượt làm bo tròn các góc nhọn vật cản
+    clear_sphere_radius: 1.5             # Bán kính vùng ép buộc là trống (free) xung quanh robot (tránh tự quét trúng thân)
+    occupied_sphere_radius: 5.0          # Bán kính vùng ngoài cùng ép buộc là vật cản (occupied)
+    esdf_add_occupied_crust: false       # Tạo vỏ chướng ngại vật ở ranh giới ngoài cùng để ngăn robot đi vào vùng chưa biết
+    esdf_euclidean_distance: true        # Tính khoảng cách Euclid đầy đủ thay vì Quasi-Euclidean để tránh vật cản mượt mà hơn
+    
+    # ----------------------------------------------------
+    # Quản lý hiệu năng CPU & Lập kế hoạch di chuyển
+    # ----------------------------------------------------
+    min_time_between_msgs_sec: 0.0       # Thời gian tối thiểu giữa 2 frame mây điểm (tăng lên 0.1 nếu muốn giảm tải CPU)
+    pointcloud_queue_size: 10            # Kích thước hàng đợi tối đa trước khi tự động drop frame cũ để tránh lag tích lũy
+    max_integration_time_s: 15.0         # Thời gian tối đa cho phép CPU xử lý một frame pointcloud (s)
+    publish_traversable: false           # Bật/tắt việc xuất bản bản đồ vùng có thể di chuyển qua
+    traversability_radius: 1.0           # Bán kính an toàn tối thiểu của robot (m) để tính toán vùng di chuyển được
+

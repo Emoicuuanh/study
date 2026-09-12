@@ -1,0 +1,18 @@
+# --- ROS 2 / colcon build artifacts ---
+/build/
+/install/
+/log/
+build.log
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.pytest_cache/
+
+# --- Editor / OS ---
+*.swp
+*~
+.DS_Store
+Thumbs.db

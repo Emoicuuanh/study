@@ -1,0 +1,13 @@
+aruco_detector:
+  ros__parameters:
+    image_topic: "/camera/color/image_raw"
+    camera_info_topic: "/camera/color/camera_info"
+    use_camera_info: true
+    marker_size: 0.2 # Size of ArUco marker side in meters (0.1m = 10cm)
+    aruco_dictionary: "DICT_5X5_100"
+    tf_prefix: "aruco_marker_"
+    camera_frame_override: ""
+    publish_tf: true
+    publish_image_result: true
+    publish_rviz_markers: true
+    show_image: true # Set true to pop up OpenCV preview GUI window

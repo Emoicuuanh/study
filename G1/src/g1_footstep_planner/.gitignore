@@ -1,0 +1,15 @@
+# ROS 2 & C++ Build Artifacts
+build/
+install/
+log/
+*.pyc
+__pycache__/
+*.so
+*.o
+*.a
+
+# IDEs & OS
+.vscode/
+.idea/
+.DS_Store
+*.swp

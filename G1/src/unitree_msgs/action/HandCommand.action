@@ -1,0 +1,33 @@
+# =======================
+# Goal
+# =======================
+
+string hand           # "left" | "right" | "both"
+uint8  mode           # 0..15 theo Inspire SDK
+
+string type           # "standard" | "custom"
+
+# ---- STANDARD MODE ----
+string name_action    # ví dụ: "open_hand", "close_hand"
+# chỉ dùng khi type == "standard"
+
+# ---- CUSTOM MODE ----
+int32[6] angles       # dùng khi mode có ANGLE
+int32[6] positions    # dùng khi mode có POSITION
+int32[6] forces       # dùng khi mode có FORCE
+int32[6] speeds       # dùng khi mode có VELOCITY
+
+float32 timeout
+
+---
+# =======================
+# Result
+# =======================
+bool success
+string message
+
+---
+# =======================
+# Feedback
+# =======================
+string state

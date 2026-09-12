@@ -1,0 +1,77 @@
+g1_footstep_planner_node:
+  ros__parameters:
+    # -------------------------------------------------------------
+    # 1. Vận tốc thực thi (Execution Velocities - Vượt ngưỡng deadband)
+    # -------------------------------------------------------------
+    vx_exec: 0.12 # Vận tốc tiến/lùi thực thi (m/s)
+    vy_exec: 0.12 # Vận tốc tạt ngang thực thi (m/s)
+    wz_exec: 0.12 # Vận tốc xoay tại chỗ thực thi (rad/s)
+
+    # -------------------------------------------------------------
+    # 2. Ngưỡng Vận tốc tối thiểu & Biên độ An toàn (SDK Deadbands & Safety Margin)
+    # -------------------------------------------------------------
+    v_min: 0.10 # Ngưỡng vận tốc tuyến tính tối thiểu để G1 bước đi (m/s)
+    w_min: 0.10 # Ngưỡng vận tốc góc xoay tối thiểu để G1 bắt đầu xoay (rad/s)
+    deadband_safety_margin: 0.02 # Biên độ an toàn tự động cộng vào khi v_exec <= v_min (m/s hoặc rad/s)
+
+    # -------------------------------------------------------------
+    # 3. Dung sai Dừng (Target Tolerances)
+    # -------------------------------------------------------------
+    forward_tolerance: 0.005 # Dung sai sai số tiến/lùi (m) [5mm]
+    strafe_tolerance: 0.005 # Dung sai sai số tạt ngang (m) [5mm]
+    yaw_tolerance: 0.01 # Dung sai sai số góc xoay (rad) [~0.57 độ]
+
+    # -------------------------------------------------------------
+    # 4. Ràng buộc Động học Nấc bước (Footstep Stride Limits)
+    # -------------------------------------------------------------
+    max_stride_x: 0.05 # Sải bước tiến/lùi tối đa của 1 bước (m) [10cm]
+    max_stride_y: 0.03 # Sải bước tạt ngang tối đa của 1 bước (m) [5cm]
+    max_stride_yaw: 0.1 # Góc xoay tối đa của 1 bước (rad) [~7 độ]
+    stance_width: 0.20 # Khoảng cách giữa 2 bàn chân đứng chuẩn (m) [20cm]
+
+    # -------------------------------------------------------------
+    # 5. Tên Topic & Hệ Tọa độ ROS 2 (ROS 2 Topics & Frames)
+    # -------------------------------------------------------------
+    cmd_vel_topic: "/cmd_vel_footstep" # Topic xuất vận tốc (Ưu tiên 75 trong twist_mux)
+    g1_mode_topic: "/g1_mode" # Topic phát lệnh chuyển mode dáng đứng
+    odom_frame: "odom" # Khung tọa độ Odometry
+    base_frame: "base_link" # Khung tọa độ gốc Robot G1
+
+    # -------------------------------------------------------------
+    # 6. Điều khiển Vòng kín Odometry (Closed-Loop Feedback & PI Gains)
+    # -------------------------------------------------------------
+    enable_closed_loop: true # Bật cơ chế vòng kín Odometry Feedback
+    kp_linear: 2.0 # Hệ số P điều khiển vận tốc tuyến tính
+    kp_angular: 1.5 # Hệ số P điều khiển vận tốc góc
+    ki_linear: 0.4 # Hệ số I khử trượt chéo tuyến tính (Cross-Track Integral Gain)
+    ki_angular: 0.2 # Hệ số I khử lệch góc quay (Cross-Track Yaw Integral Gain)
+
+    # -------------------------------------------------------------
+    # 7. Khử Lệch Chéo 3-DOF (Active Cross-Track Damping & Limits)
+    # -------------------------------------------------------------
+    kp_crosstrack_linear: 1.0 # Hệ số P dập dạt ngang / dạt tiến chéo
+    kp_crosstrack_angular: 1.0 # Hệ số P dập dạt góc yaw
+    max_crosstrack_linear_vel: 0.06 # Giới hạn vận tốc bù dạt tuyến tính (m/s)
+    max_crosstrack_angular_vel: 0.08 # Giới hạn vận tốc bù dạt góc (rad/s)
+    anti_windup_limit: 0.03 # Ngưỡng khóa bão hòa tích phân (Anti-Windup Limit)
+
+    # -------------------------------------------------------------
+    # 8. Gia Tốc & Thời Gian Thực Thi (Execution Ramp & Safety Timeout)
+    # -------------------------------------------------------------
+    ramp_up_duration: 0.2 # Thời gian tăng tốc mịn khi bắt đầu pha (s)
+    safety_timeout_multiplier: 3.0 # Hệ số nhân thời gian timeout an toàn (duration * multiplier + offset)
+    safety_timeout_offset: 1.0 # Thời gian cộng thêm vào timeout an toàn (s)
+    inter_phase_pause: 0.1 # Thời gian tạm dừng giữa các pha (s)
+
+    # -------------------------------------------------------------
+    # 9. Pha Cân Bằng Thu Chân Vuông Góc Cuối Lệnh (Terminal Square-Up Phase)
+    # -------------------------------------------------------------
+    enable_square_up: true # Bật pha thu 2 chân về song song trước khi khóa đứng
+    square_up_duration: 0.45 # Thời gian duy trì nhịp thu chân settling step (s)
+
+    # -------------------------------------------------------------
+    # 10. Nguồn Odometry Feedback (TF Odometry vs. Topic /dog_odom)
+    # -------------------------------------------------------------
+    use_odom_topic: false # false: Dùng TF odom -> base_link (LiDAR FAST-LIO); true: Dùng Topic Odometry
+    odom_topic: "/dog_odom" # Tên topic Odometry phát ra trực tiếp từ robot Unitree G1
+

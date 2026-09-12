@@ -1,0 +1,48 @@
+gtsam_loop_closure_node:
+  ros__parameters:
+    # ----------------------------------------------------
+    # Tọa độ & Frame
+    # ----------------------------------------------------
+    map_frame: "map"
+    odom_frame: "odom"
+    base_frame: "base_link"
+
+    # ----------------------------------------------------
+    # Điều kiện tạo Keyframe (Keyframe Selection)
+    # ----------------------------------------------------
+    keyframe_distance: 1.0     # Khoảng cách tối thiểu giữa 2 keyframe (meters)
+    keyframe_angle: 0.2        # Góc xoay tối thiểu giữa 2 keyframe (radians, ~11.5 degrees)
+
+    # ----------------------------------------------------
+    # Tìm kiếm Vòng lặp (Loop Closure Search)
+    # ----------------------------------------------------
+    loop_closure_enable: true
+    loop_search_radius: 8.0     # Bán kính tìm kiếm các keyframe cũ trong vùng lân cận (meters)
+    loop_search_time_diff: 30.0 # Khoảng thời gian tối thiểu cách biệt với quá khứ để coi là vòng lặp (seconds)
+    loop_frequency: 1.0         # Tần số chạy luồng tìm kiếm vòng lặp (Hz)
+    min_history_keyframes: 30   # Số lượng keyframe tối thiểu bỏ qua từ thời điểm hiện tại để tránh khớp chính nó
+
+    # ----------------------------------------------------
+    # So khớp mây điểm (GICP / ICP Registration)
+    # ----------------------------------------------------
+    icp_fitness_score: 0.2      # Ngưỡng lỗi hội tụ tối đa của GICP (càng nhỏ càng khắt khe, mặc định 0.2)
+    gicp_max_distance: 1.0      # Khoảng cách tương ứng tối đa giữa các điểm để so khớp (meters)
+    gicp_max_iterations: 50     # Số lần lặp tối đa của thuật toán GICP
+    voxel_grid_leaf_size: 0.4   # Kích thước ô voxel lọc mây điểm keyframe (meters)
+
+    # ----------------------------------------------------
+    # Hiệp sai nhiễu đồ thị (GTSAM Covariance / Sigmas)
+    # ----------------------------------------------------
+    # Định dạng: [roll, pitch, yaw, x, y, z] nhiễu đo
+    odom_noise_sigmas: [0.001, 0.001, 0.001, 0.01, 0.01, 0.01]  # Nhiễu tích lũy odometry
+    loop_noise_sigmas: [0.0001, 0.0001, 0.0001, 0.001, 0.001, 0.001] # Nhiễu ràng buộc vòng khép (tin cậy cao hơn)
+
+    # ----------------------------------------------------
+    # Hiển thị và Xuất bản (Visualization)
+    # ----------------------------------------------------
+    map_publish_frequency: 0.1  # Tần số xuất bản bản đồ PCD toàn cục (Hz, ví dụ 0.1Hz = 10s một lần)
+
+    # ----------------------------------------------------
+    # Đường dẫn lưu bản đồ (Map Saving Directory)
+    # ----------------------------------------------------
+    save_directory: "/home/hoangdc/ROS2/unitree_G1/maps/"

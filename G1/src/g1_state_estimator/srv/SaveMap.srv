@@ -1,0 +1,7 @@
+# Request
+string destination_path      # Thư mục lưu bản đồ (để trống nếu dùng mặc định từ config)
+string file_prefix          # Tiền tố tên file (ví dụ: "my_run" -> sẽ lưu thành "my_run.pcd" và "my_run_trajectory.txt")
+---
+# Response
+bool success
+string message

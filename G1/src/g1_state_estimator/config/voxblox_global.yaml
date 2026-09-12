@@ -1,0 +1,41 @@
+/**:
+  ros__parameters:
+    # ----------------------------------------------------
+    # Tham số cơ bản & Tọa độ
+    # ----------------------------------------------------
+    tsdf_voxel_size: 0.10                # Kích thước mỗi ô voxel (m) - 10cm là tối ưu cho robot G1
+    tsdf_voxels_per_side: 16             # Số ô voxel trên mỗi cạnh của một Block (phải là lũy thừa của 2)
+    world_frame: "map"                   # Hệ tọa độ đích toàn cục (sử dụng map khi có Loop Closure)
+    sensor_frame: "livox_frame"          # Frame ID của cảm biến LiDAR (khớp với TF của robot)
+    
+    # ----------------------------------------------------
+    # Thiết lập quét & Tích hợp tia laser
+    # ----------------------------------------------------
+    max_ray_length_m: 8.0                # Tầm hoạt động tối đa chiếu tia laser (m) để tích hợp vào bản đồ
+    min_ray_length_m: 0.2                # Tầm hoạt động tối thiểu (m) để lọc nhiễu gần robot
+    allow_clear: true                    # Cho phép xóa các vùng trống dọc theo hướng chiếu tia laser
+    use_const_weight: false              # Không dùng trọng số hằng số (sử dụng trọng số giảm theo khoảng cách)
+    
+    # ----------------------------------------------------
+    # Tần số cập nhật & Xuất bản dữ liệu
+    # ----------------------------------------------------
+    generate_esdf: false                 # Tắt tính toán ESDF cho node global để tiết kiệm tài nguyên CPU
+    update_mesh_every_n_sec: 1.0         # Tần số cập nhật lưới mesh 3D toàn cục (1 giây một lần)
+    publish_tsdf_map: false              # Không xuất bản bản đồ TSDF thô dạng PointCloud để tiết kiệm băng thông
+    publish_slices: false                # Tắt tạo lát cắt 2D toàn cục
+    mesh_filename: "/home/hoangdc/ROS2/unitree_G1/maps/g1_office.ply" # Đường dẫn lưu file lưới 3D (.ply)
+
+    # ----------------------------------------------------
+    # Tham số cấu hình nâng cao & Hiệu năng (Mặc định)
+    # ----------------------------------------------------
+    truncation_distance: 0.4             # Khoảng cắt TSDF (m) (tsdf_voxel_size * 4)
+    max_weight: 10000.0                  # Trọng số tích lũy tối đa cho mỗi voxel (ổn định bản đồ trước nhiễu)
+    use_weight_dropoff: true             # Giảm trọng số của các điểm phía sau bề mặt vật cản để tránh vệt bóng ma
+    voxel_carving_enabled: true          # Bật tính năng dọn dẹp các vật cản động đã di chuyển đi nơi khác
+    anti_grazing: false                  # Chống quét sượt làm bo tròn các góc nhọn chướng ngại vật
+    mesh_min_weight: 0.0001              # Trọng số tối thiểu của voxel để được đưa vào lưới mesh 3D
+    mesh_use_color: true                 # Sử dụng màu sắc/cường độ từ Point Cloud để tô màu mesh 3D
+    min_time_between_msgs_sec: 0.0       # Thời gian tối thiểu giữa 2 tin nhắn nhận vào (0.0 là xử lý toàn bộ)
+    pointcloud_queue_size: 10            # Kích thước hàng đợi tối đa trước khi tự động drop frame cũ để giảm lag
+    max_integration_time_s: 15.0         # Giới hạn thời gian CPU tối đa (s) để xử lý một frame pointcloud
+

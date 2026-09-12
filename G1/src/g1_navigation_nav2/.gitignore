@@ -1,0 +1,21 @@
+# ROS 2 package gitignore
+build/
+install/
+log/
+
+# C++ compilation outputs
+*.o
+*.so
+*.a
+
+# Python compilation outputs
+__pycache__/
+*.pyc
+*.pyo
+
+# Editor & OS temporary files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*~

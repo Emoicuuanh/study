@@ -1,0 +1,12 @@
+# Configuration for Unified Map Saver Tool (save_all_maps.py)
+map_saver:
+  save_dir: "/home/hoangdc/ROS2/unitree_G1/maps/"
+  prefix: "g1_office"
+  pcd_to_gridmap_script: "/home/hoangdc/ROS2/unitree_G1/dev_unitreeg1_ws/src/g1_navigation_nav2/scripts/pcd_to_gridmap.py"
+
+  # 2D Gridmap conversion options
+  gridmap:
+    min_z: -0.60
+    max_z: 0.45
+    resolution: 0.05
+    align_gravity: true

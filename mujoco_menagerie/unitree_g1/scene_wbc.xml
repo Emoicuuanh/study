@@ -1,0 +1,12 @@
+<mujoco model="g1 wbc scene">
+  <include file="scene.xml"/>
+
+  <worldbody>
+    <body name="target_r" mocap="true" pos="0.30 -0.25 0.90">
+      <geom type="sphere" size="0.03" rgba="1 0.3 0.3 0.9" contype="0" conaffinity="0"/>
+    </body>
+    <body name="target_l" mocap="true" pos="0.30 0.25 0.90">
+      <geom type="sphere" size="0.03" rgba="0.2 0.5 1 0.9" contype="0" conaffinity="0"/>
+    </body>
+  </worldbody>
+</mujoco>

@@ -1,0 +1,40 @@
+g1_state_estimator:
+  ros__parameters:
+    # Sensor Topics
+    imu_topic: "/dog_imu_raw"
+    lio_topic: "/Odometry"
+    leg_topic: "/dog_odom"
+
+    # Coordinate Frames
+    map_frame: "map"
+    odom_frame: "odom"
+    base_frame: "base_link"
+    publish_tf: true
+    use_host_time: true
+
+    # ES-IEKF Covariance & Noise settings
+    # Continuous-time noise PSD
+    gyro_noise: 0.0001 # Gyroscope measurement noise variance
+    acc_noise: 0.001 # Accelerometer measurement noise variance
+    gyro_bias_noise: 0.000001 # Gyroscope bias random walk variance
+    acc_bias_noise: 0.00001 # Accelerometer bias random walk variance
+
+    # Measurement noise variance (discrete)
+    # [x, y, z] noise variance
+    lio_pos_noise: [0.001, 0.001, 0.1] # Set Z noise to 0.1 to ignore LIO Z-drift
+    lio_ori_noise: [0.001, 0.001, 0.001]
+    leg_vel_noise: [0.01, 0.01, 0.01]
+
+    # Rollback History duration
+    history_length_sec: 2.0
+
+    # Fallback Static Extrinsic: body (LIO internal IMU) to base_link/pelvis
+    # Loaded if TF tree lookup fails. Values match G1 config:
+    # x, y, z translations
+    extrinsic_x: 0.03314
+    extrinsic_y: 0.02332
+    extrinsic_z: 0.41554
+    # Roll, pitch, yaw rotation angles (radians)
+    extrinsic_roll: -3.14159
+    extrinsic_pitch: -0.04014
+    extrinsic_yaw: 0.0
