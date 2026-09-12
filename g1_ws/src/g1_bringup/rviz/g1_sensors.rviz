@@ -1,0 +1,113 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /LiDAR 3D1
+        - /Camera 3D1
+    Tree Height: 620
+Visualization Manager:
+  Class: ""
+  Global Options:
+    Background Color: 30; 32; 38
+    Fixed Frame: odom
+    Frame Rate: 30
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Luoi san
+      Enabled: true
+      Cell Size: 1
+      Plane Cell Count: 24
+      Color: 80; 86; 96
+      Line Style:
+        Line Width: 0.02
+        Value: Lines
+    - Class: rviz_default_plugins/TF
+      Name: TF (odom-pelvis-lidar-Camera)
+      Enabled: true
+      Marker Scale: 0.6
+      Show Arrows: false
+      Show Axes: true
+      Show Names: true
+      Update Interval: 0
+    - Class: rviz_default_plugins/PointCloud2
+      Name: LiDAR 3D
+      Enabled: true
+      Topic:
+        Value: /points
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+      Style: Points
+      Size (Pixels): 2
+      Alpha: 1
+      Decay Time: 0
+      Color Transformer: AxisColor
+      Axis: Z
+      Autocompute Intensity Bounds: true
+      Use Fixed Frame: true
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Camera 3D
+      Enabled: true
+      Topic:
+        Value: /camera/depth_pcl
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+      Style: Points
+      Size (Pixels): 3
+      Alpha: 0.9
+      Decay Time: 0
+      Color Transformer: FlatColor
+      Color: 255; 165; 50
+    - Class: rviz_default_plugins/Odometry
+      Name: Duong di (Odometry)
+      Enabled: true
+      Topic:
+        Value: /odom
+        Reliability Policy: Reliable
+      Keep: 300
+      Position Tolerance: 0.15
+      Angle Tolerance: 0.15
+      Shape:
+        Value: Arrow
+        Alpha: 0.7
+        Color: 90; 220; 140
+        Shaft Length: 0.25
+        Shaft Diameter: 0.03
+        Head Length: 0.08
+        Head Diameter: 0.07
+    - Class: rviz_default_plugins/Image
+      Name: Camera RGB
+      Enabled: true
+      Topic:
+        Value: /camera/rgb
+        Reliability Policy: Best Effort
+      Max Value: 1
+      Min Value: 0
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Name: Current View
+      Distance: 14
+      Pitch: 0.65
+      Yaw: 0.9
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Near Clip Distance: 0.01
+Window Geometry:
+  Height: 950
+  Width: 1600
+  Displays:
+    collapsed: false
+  Camera RGB:
+    collapsed: false

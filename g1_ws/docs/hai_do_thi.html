@@ -1,0 +1,385 @@
+<title>Vì sao IMU phải nằm ở đồ thị riêng</title>
+<style>
+  :root {
+    --bg:        #e9edf2;
+    --surface:   #ffffff;
+    --surface-2: #f3f6f9;
+    --ink:       #101720;
+    --ink-soft:  #46525f;
+    --muted:     #6b7885;
+    --line:      #ccd5de;
+    --line-soft: #e0e7ee;
+
+    --slow:      #14697a;   /* nhip render  - cham */
+    --slow-dim:  #14697a26;
+    --fast:      #9a6a06;   /* nhip vat ly  - nhanh */
+    --fast-dim:  #9a6a0626;
+    --alarm:     #97291f;
+    --alarm-bg:  #97291f14;
+
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:        #0c1219;
+      --surface:   #131b24;
+      --surface-2: #18222d;
+      --ink:       #e6edf4;
+      --ink-soft:  #adbccb;
+      --muted:     #7d8d9d;
+      --line:      #2a3946;
+      --line-soft: #1e2b37;
+      --slow:      #56b8cc;
+      --slow-dim:  #56b8cc22;
+      --fast:      #e0b04a;
+      --fast-dim:  #e0b04a22;
+      --alarm:     #ef7b6d;
+      --alarm-bg:  #ef7b6d14;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg:#e9edf2; --surface:#ffffff; --surface-2:#f3f6f9;
+    --ink:#101720; --ink-soft:#46525f; --muted:#6b7885;
+    --line:#ccd5de; --line-soft:#e0e7ee;
+    --slow:#14697a; --slow-dim:#14697a26; --fast:#9a6a06; --fast-dim:#9a6a0626;
+    --alarm:#97291f; --alarm-bg:#97291f14;
+  }
+  :root[data-theme="dark"] {
+    --bg:#0c1219; --surface:#131b24; --surface-2:#18222d;
+    --ink:#e6edf4; --ink-soft:#adbccb; --muted:#7d8d9d;
+    --line:#2a3946; --line-soft:#1e2b37;
+    --slow:#56b8cc; --slow-dim:#56b8cc22; --fast:#e0b04a; --fast-dim:#e0b04a22;
+    --alarm:#ef7b6d; --alarm-bg:#ef7b6d14;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.65;
+    padding: clamp(1.2rem, 4vw, 3.5rem) 1.2rem 5rem;
+  }
+  main { max-width: 60rem; margin: 0 auto; display: flex; flex-direction: column; gap: 2.75rem; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: .7rem;
+  }
+  h1 {
+    font-size: clamp(1.7rem, 4.2vw, 2.6rem); line-height: 1.15;
+    letter-spacing: -.02em; text-wrap: balance; font-weight: 650;
+  }
+  h2 {
+    font-size: 1.18rem; font-weight: 650; letter-spacing: -.01em;
+    padding-bottom: .55rem; border-bottom: 1px solid var(--line);
+    margin-bottom: 1.1rem;
+  }
+  p { max-width: 62ch; color: var(--ink-soft); }
+  .lede { font-size: 1.05rem; color: var(--ink-soft); max-width: 58ch; margin-top: .8rem; }
+  section { display: flex; flex-direction: column; }
+  code {
+    font-family: var(--mono); font-size: .88em;
+    background: var(--surface-2); border: 1px solid var(--line-soft);
+    padding: .08em .38em; border-radius: 3px;
+  }
+
+  /* ---- bang tin hieu ---- */
+  .scope {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 6px; padding: 1.5rem clamp(1rem,3vw,1.9rem);
+    display: flex; flex-direction: column; gap: 1.6rem;
+  }
+  .scope-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    flex-wrap: wrap; gap: .5rem;
+    font-family: var(--mono); font-size: .74rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .trace { display: grid; grid-template-columns: minmax(0,1fr); gap: .5rem; }
+  .trace-label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 1rem; flex-wrap: wrap;
+  }
+  .trace-name { font-family: var(--mono); font-size: .82rem; font-weight: 600; }
+  .trace-rate {
+    font-family: var(--mono); font-size: .82rem; font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+  .ticks {
+    height: 46px; border-radius: 3px; border: 1px solid var(--line-soft);
+    position: relative; overflow: hidden;
+  }
+  .ticks.slow {
+    background:
+      repeating-linear-gradient(90deg,
+        var(--slow) 0 3px, transparent 3px 20%);
+    background-color: var(--slow-dim);
+  }
+  .ticks.fast {
+    background:
+      repeating-linear-gradient(90deg,
+        var(--fast) 0 2px, transparent 2px 2%);
+    background-color: var(--fast-dim);
+  }
+  .axis {
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: .7rem; color: var(--muted);
+    font-variant-numeric: tabular-nums; border-top: 1px dashed var(--line);
+    padding-top: .45rem;
+  }
+  .verdict {
+    display: flex; gap: .6rem; align-items: baseline; flex-wrap: wrap;
+    font-size: .93rem;
+  }
+  .count {
+    font-family: var(--mono); font-weight: 700; font-variant-numeric: tabular-nums;
+  }
+  .count.slow { color: var(--slow); }
+  .count.fast { color: var(--fast); }
+
+  /* ---- so sanh 2 hop ---- */
+  .compare { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  @media (min-width: 44rem) { .compare { grid-template-columns: 1fr 1fr; } }
+  .box {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 6px; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .box-top {
+    padding: .7rem 1rem; font-family: var(--mono); font-size: .74rem;
+    letter-spacing: .09em; text-transform: uppercase;
+    display: flex; justify-content: space-between; gap: .6rem; align-items: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .box.bad .box-top  { background: var(--alarm-bg); color: var(--alarm); }
+  .box.good .box-top { background: var(--fast-dim); color: var(--fast); }
+  .box-body { padding: 1.1rem 1rem 1.2rem; display: flex; flex-direction: column; gap: .85rem; }
+  .stamp {
+    font-family: var(--mono); font-size: .78rem; font-variant-numeric: tabular-nums;
+    padding: .3rem .6rem; border-radius: 3px; align-self: flex-start;
+    border: 1px dashed var(--line);  color: var(--ink-soft);
+  }
+  .nodes { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .node {
+    font-family: var(--mono); font-size: .74rem;
+    padding: .22rem .5rem; border-radius: 3px;
+    background: var(--surface-2); border: 1px solid var(--line-soft);
+    color: var(--ink-soft);
+  }
+  .node.hl { border-color: var(--fast); color: var(--fast); background: var(--fast-dim); }
+  .node.dead { border-color: var(--alarm); color: var(--alarm); background: var(--alarm-bg);
+               text-decoration: line-through; }
+  .box p { font-size: .89rem; max-width: none; margin: 0; }
+
+  /* ---- khoi loi ---- */
+  .errbox {
+    border-left: 3px solid var(--alarm); background: var(--alarm-bg);
+    padding: .9rem 1.1rem; border-radius: 0 4px 4px 0;
+    font-family: var(--mono); font-size: .8rem; line-height: 1.6;
+    color: var(--ink-soft); overflow-x: auto;
+  }
+  .errbox strong { color: var(--alarm); font-weight: 600; }
+
+  .callout {
+    background: var(--surface); border: 1px solid var(--line);
+    border-left: 3px solid var(--slow);
+    padding: 1rem 1.2rem; border-radius: 0 5px 5px 0;
+  }
+  .callout p { margin: 0; }
+  .callout p + p { margin-top: .6rem; }
+
+  pre {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1rem; overflow-x: auto;
+    font-family: var(--mono); font-size: .82rem; line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  pre b { color: var(--fast); font-weight: 600; }
+  pre i { color: var(--slow); font-style: normal; }
+  pre s { color: var(--muted); text-decoration: none; }
+</style>
+
+<main>
+
+  <header>
+    <div class="eyebrow">Isaac Sim · OmniGraph</div>
+    <h1>Vì sao IMU phải nằm ở một đồ thị riêng</h1>
+    <p class="lede">
+      Trong cùng một vòng lặp mô phỏng có hai nhịp đồng hồ khác nhau.
+      Đồ thị ROS2 chỉ bắt được nhịp chậm — và không có cách nối dây nào sửa được điều đó.
+    </p>
+  </header>
+
+  <section>
+    <h2>Một vòng lặp, hai nhịp</h2>
+    <p style="margin-bottom:1.1rem">
+      Đây là vòng lặp chính trong <code>run_g1_sim.py</code>. Vật lý chạy mỗi bước,
+      nhưng dựng hình chỉ chạy mỗi 10 bước:
+    </p>
+<pre>for i in range(n_steps):
+    ctrl.step(cmd=(vx, vy, wz))
+    <b>world.step(render=False)</b>        <s># vật lý  — mỗi vòng lặp = 500 Hz</s>
+    if i % RENDER_EVERY == 0:       <s># RENDER_EVERY = 10</s>
+        <i>world.render()</i>              <s># dựng hình — 1/10 vòng lặp = 50 Hz</s></pre>
+  </section>
+
+  <section>
+    <h2>Hai nhịp đó trông thế nào trong 0,1 giây</h2>
+    <p style="margin-bottom:1.1rem">
+      0,1 giây là đúng một vòng quét LiDAR — khoảng thời gian mà FAST-LIO cần nội suy tư thế
+      để gỡ méo.
+    </p>
+
+    <div class="scope">
+      <div class="scope-head">
+        <span>Cửa sổ quan sát · 0,100 s</span>
+        <span>một vòng quét LiDAR</span>
+      </div>
+
+      <div class="trace">
+        <div class="trace-label">
+          <span class="trace-name" style="color:var(--slow)">OnTick · nhịp dựng hình</span>
+          <span class="trace-rate">50 Hz</span>
+        </div>
+        <div class="ticks slow"></div>
+        <div class="verdict">
+          <span class="count slow">5 lần</span>
+          <span style="color:var(--muted)">— đây là tất cả những gì đồ thị ROS2 nhìn thấy</span>
+        </div>
+      </div>
+
+      <div class="trace">
+        <div class="trace-label">
+          <span class="trace-name" style="color:var(--fast)">OnPhysicsStep · nhịp vật lý</span>
+          <span class="trace-rate">500 Hz</span>
+        </div>
+        <div class="ticks fast"></div>
+        <div class="verdict">
+          <span class="count fast">50 lần</span>
+          <span style="color:var(--muted)">— IMU cần nhịp này</span>
+        </div>
+      </div>
+
+      <div class="axis"><span>0 ms</span><span>50 ms</span><span>100 ms</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Chỗ dễ hiểu lầm nhất</h2>
+    <div class="callout">
+      <p>
+        Câu hỏi tự nhiên là: <em>“vậy chỉ cần nối node IMU vào <code>OnPhysicsStep</code>
+        thay vì <code>OnTick</code>, vẫn để chung một đồ thị, có được không?”</em>
+      </p>
+      <p>
+        <strong>Không.</strong> Vì tần số không do <em>dây nối</em> quyết định, mà do
+        <em>cả đồ thị được đọc lại bao nhiêu lần mỗi giây</em>. Đồ thị là đơn vị được
+        lập lịch, không phải từng node riêng lẻ.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Đồ thị mới là đơn vị được lập lịch</h2>
+    <div class="compare">
+
+      <div class="box bad">
+        <div class="box-top"><span>Cách đã thử — thất bại</span><span>✕</span></div>
+        <div class="box-body">
+          <div class="stamp">/ROS2Graph · đọc lại 50 lần/giây</div>
+          <div class="nodes">
+            <span class="node">OnTick</span>
+            <span class="node">LidarPub</span>
+            <span class="node">PubClock</span>
+            <span class="node">PubTF</span>
+            <span class="node">PubOdom</span>
+            <span class="node">SubTwist</span>
+            <span class="node dead">OnPhysicsStep</span>
+            <span class="node dead">ReadIMU</span>
+            <span class="node dead">PubIMU</span>
+          </div>
+          <p>
+            Node <code>OnPhysicsStep</code> có tồn tại trong đồ thị, nhưng cả đồ thị này
+            chỉ được lập lịch theo nhịp dựng hình. Nó không bao giờ được kích hoạt →
+            <code>/imu</code> không bao giờ xuất hiện.
+          </p>
+        </div>
+      </div>
+
+      <div class="box good">
+        <div class="box-top"><span>Cách đúng</span><span>✓</span></div>
+        <div class="box-body">
+          <div class="stamp" style="border-style:solid;border-color:var(--fast);color:var(--fast)">
+            /IMUGraph · ON_DEMAND · 500 lần/giây
+          </div>
+          <div class="nodes">
+            <span class="node hl">OnPhysicsStep</span>
+            <span class="node hl">ReadIMU</span>
+            <span class="node hl">PubIMU</span>
+            <span class="node">Context</span>
+            <span class="node">SimTime</span>
+          </div>
+          <p>
+            Một đồ thị <em>thứ hai</em>, đánh dấu <code>ON_DEMAND</code> — không nằm trong
+            lịch chạy theo nhịp dựng hình. Nó được trình mô phỏng vật lý gọi trực tiếp,
+            mỗi bước vật lý một lần.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Đúng một dòng tạo ra khác biệt</h2>
+<pre>og.Controller.edit(
+    {"graph_path": "/IMUGraph",
+     "evaluator_name": "execution",
+     <b>"pipeline_stage": og.GraphPipelineStage.GRAPH_PIPELINE_STAGE_ONDEMAND</b>},
+    ...
+)</pre>
+    <p style="margin-top:1rem">
+      Thiếu dòng này, Isaac Sim <em>có</em> báo lỗi — nhưng chỉ ghi vào log, không ném
+      exception. Script vẫn chạy bình thường, chỉ là topic không bao giờ xuất hiện:
+    </p>
+    <div class="errbox" style="margin-top:.9rem">
+      <strong>[Error] [isaacsim.core.nodes]</strong> Physics OnSimulationStep node detected
+      in a <strong>non on-demand Graph</strong>. Node will only trigger events if the parent
+      Graph is set to compute on-demand. (/ROS2Graph/OnPhysics)
+    </div>
+    <p style="margin-top:1rem">
+      Đây là lần thứ ba OmniGraph nuốt lỗi cấu hình theo đúng kiểu này — trước đó là
+      <code>chassisPrim</code> sai làm mất <code>/odom</code>, và <code>frame_id</code>
+      lệch hoa/thường làm RViz không vẽ được. Triệu chứng luôn giống nhau: <em>topic
+      không xuất hiện, không có traceback</em>.
+    </p>
+  </section>
+
+  <section>
+    <h2>Vì sao 50 Hz là không đủ</h2>
+    <p>
+      Gỡ méo vòng quét cần biết tư thế robot tại từng thời điểm bên trong 100 ms đó.
+      Số mẫu IMU có được quyết định độ mịn của phép nội suy:
+    </p>
+    <div class="scope" style="margin-top:1.1rem;gap:1rem">
+      <div class="verdict">
+        <span class="count slow">5 mẫu</span>
+        <span style="color:var(--muted)">nếu IMU chạy trên <code>OnTick</code> — quá thưa,
+          bỏ sót phần lớn dao động của bước chân</span>
+      </div>
+      <div class="verdict">
+        <span class="count fast">50 mẫu</span>
+        <span style="color:var(--muted)">với đồ thị on-demand — đủ cho FAST-LIO
+          (yêu cầu tối thiểu ≈ 100 Hz)</span>
+      </div>
+    </div>
+    <p style="margin-top:1.1rem">
+      Với robot chân điều này càng quan trọng: độ nghiêng thân đo được lên tới
+      <strong style="color:var(--ink)">4,43°</strong> trong lúc đi bộ, và chu kỳ bước chỉ
+      <strong style="color:var(--ink)">0,8 s</strong> — dao động nhanh hơn nhiều so với
+      những gì 5 mẫu có thể ghi lại.
+    </p>
+  </section>
+
+</main>

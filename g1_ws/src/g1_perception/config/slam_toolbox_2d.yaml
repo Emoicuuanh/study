@@ -1,0 +1,77 @@
+slam_toolbox:
+  ros__parameters:
+    use_sim_time: true
+
+    # === CAY TF - ai phat gi ===
+    # map  -> odom        : slam_toolbox phat (chinh sai so tich luy)
+    # odom -> pelvis      : Isaac Sim phat (muot nhung TROI dan)
+    # pelvis -> lidar     : Isaac Sim phat (co dinh)
+    # odom -> pelvis_stab : stabilize_frame.py phat (pelvis da bo roll/pitch)
+    #
+    # base_frame = pelvis_stab, KHONG phai pelvis.
+    # Ly do: /scan duoc pointcloud_to_laserscan phat trong frame pelvis_stab.
+    # SLAM 2D gia dinh cam bien nam NGANG; neu base_frame la pelvis (dang
+    # nghieng) thi moi quet bi hieu sai mot goc khac nhau.
+    odom_frame: odom
+    map_frame: map
+    base_frame: pelvis_stab
+    scan_topic: /scan
+
+    solver_plugin: solver_plugins::CeresSolver
+    ceres_linear_solver: SPARSE_NORMAL_CHOLESKY
+    ceres_preconditioner: SCHUR_JACOBI
+    ceres_trust_strategy: LEVENBERG_MARQUARDT
+    ceres_dogleg_type: TRADITIONAL_DOGLEG
+    ceres_loss_function: None
+
+    mode: mapping                 # mapping = dung ban do moi; localization = dung ban do co
+    debug_logging: false
+    throttle_scans: 1
+    transform_publish_period: 0.02   # 50Hz - tan so phat map->odom
+    map_update_interval: 1.0         # 1Hz - tan so ve lai /map (nang, nen cham)
+    resolution: 0.05                 # 5cm moi o luoi
+    max_laser_range: 6.0             # PHAI khop range_max cua pointcloud_to_laserscan
+    minimum_time_interval: 0.2
+    transform_timeout: 0.2
+    tf_buffer_duration: 30.0
+    stack_size_to_use: 40000000
+    enable_interactive_mode: true
+
+    # === NGUONG TAO NODE MOI TRONG POSE GRAPH ===
+    # Chi them mot node khi robot da di du xa hoac quay du nhieu. Neu de 0
+    # thi dung yen cung sinh node lien tuc -> graph phinh, toi uu cham dan.
+    minimum_travel_distance: 0.2      # 20cm
+    minimum_travel_heading: 0.2       # ~11 do
+
+    # === SCAN MATCHING - so quet moi voi quet cu de do dich chuyen ===
+    use_scan_matching: true
+    use_scan_barycenter: true
+    scan_buffer_size: 10
+    scan_buffer_maximum_scan_distance: 10.0
+    link_match_minimum_response_fine: 0.1
+    link_scan_maximum_distance: 1.5
+
+    # === LOOP CLOSURE - buoc DUY NHAT xoa duoc sai so tich luy ===
+    do_loop_closing: true
+    loop_search_maximum_distance: 3.0   # ban kinh tim lai cho cu
+    loop_match_minimum_chain_size: 10   # can >=10 quet lien tiep khop moi tin
+    loop_match_maximum_variance_coarse: 3.0
+    loop_match_minimum_response_coarse: 0.35
+    loop_match_minimum_response_fine: 0.45
+
+    # === Tham so tim kiem cua correlation scan matcher ===
+    correlation_search_space_dimension: 0.5
+    correlation_search_space_resolution: 0.01
+    correlation_search_space_smear_deviation: 0.1
+    loop_search_space_dimension: 8.0
+    loop_search_space_resolution: 0.05
+    loop_search_space_smear_deviation: 0.03
+
+    distance_variance_penalty: 0.5
+    angle_variance_penalty: 1.0
+    fine_search_angle_offset: 0.00349
+    coarse_search_angle_offset: 0.349
+    coarse_angle_resolution: 0.0349
+    minimum_angle_penalty: 0.9
+    minimum_distance_penalty: 0.5
+    use_response_expansion: true

@@ -1,0 +1,45 @@
+# ============================================================
+# Moi truong Python - 5.4 GB, KHONG THE push
+# GitHub chan cung file > 100MB, ma .venv co 14 file vuot
+# (lon nhat: libcublasLt.so.13 = 517 MB)
+# Tao lai: python3.13 -m venv .venv && pip install -r requirements.txt
+# ============================================================
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# ============================================================
+# REPO CUA NGUOI KHAC - clone rieng, xem README.md
+#   unitree_rl_gym   github.com/unitreerobotics/unitree_rl_gym
+#   mujoco_menagerie github.com/google-deepmind/mujoco_menagerie
+# Repo RIENG cua minh, giu doc lap:
+#   G1               github.com/Emoicuuanh/G1
+# ============================================================
+unitree_rl_gym/
+mujoco_menagerie/
+G1/
+
+# ============================================================
+# San pham bien dich - tao lai duoc, va chua duong dan TUYET DOI
+# nen hong tren may khac
+# ============================================================
+g1_ws/build/
+g1_ws/install/
+g1_ws/log/
+.colcon_*
+COLCON_IGNORE
+
+# Ket qua chay thu
+*.pcd
+*.bag
+g1_ws/src/fast_lio/Log/
+g1_ws/src/fast_lio/PCD/
+
+# Cau hinh cuc bo cua may
+.claude/settings.local.json
+
+# He dieu hanh / editor
+.DS_Store
+*.swp
+*~

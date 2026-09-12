@@ -1,0 +1,135 @@
+### Cau hinh RViz cho CHANG A - SLAM 2D
+#
+# Fixed Frame = map (KHONG phai odom nhu g1_sensors.rviz).
+#   Dat odom  -> ban do se "keo theo" robot moi khi loop closure chinh sua,
+#                nhin nhu ca the gioi nhay.
+#   Dat map   -> ban do dung yen, ROBOT nhay mot cai khi loop closure. Day
+#                moi la thu ta muon quan sat.
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Ban do 2D1
+        - /Scan 2D1
+    Tree Height: 600
+Visualization Manager:
+  Class: ""
+  Global Options:
+    Background Color: 30; 32; 38
+    Fixed Frame: map
+    Frame Rate: 30
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Luoi san
+      Enabled: true
+      Cell Size: 1
+      Plane Cell Count: 24
+      Color: 60; 64; 72
+      Line Style:
+        Line Width: 0.02
+        Value: Lines
+    # Ban do luoi chiem dung: den = vat can, xam nhat = trong, xam dam = chua biet
+    - Class: rviz_default_plugins/Map
+      Name: Ban do 2D
+      Enabled: true
+      Topic:
+        Value: /map
+        Durability Policy: Transient Local
+        Reliability Policy: Reliable
+      Alpha: 0.75
+      Color Scheme: map
+      Draw Behind: false
+    # /scan chinh la dau vao cua SLAM. Neu cai nay trong thi SLAM khong the
+    # lam gi - luon kiem tra no TRUOC khi nghi ngo slam_toolbox.
+    - Class: rviz_default_plugins/LaserScan
+      Name: Scan 2D
+      Enabled: true
+      Topic:
+        Value: /scan
+        Depth: 5
+        Reliability Policy: Best Effort
+      Style: Points
+      Size (Pixels): 4
+      Color Transformer: FlatColor
+      Color: 255; 60; 60
+      Decay Time: 0
+    - Class: rviz_default_plugins/PointCloud2
+      Name: LiDAR 3D (goc)
+      Enabled: false
+      Topic:
+        Value: /points
+        Depth: 5
+        Reliability Policy: Best Effort
+      Style: Points
+      Size (Pixels): 1
+      Alpha: 0.4
+      Color Transformer: AxisColor
+      Axis: Z
+    # Do thi tu the cua slam_toolbox: moi node la mot lan quet duoc luu,
+    # moi canh la mot rang buoc. Loop closure hien ra la canh noi hai diem
+    # XA NHAU tren duong di.
+    - Class: rviz_default_plugins/MarkerArray
+      Name: Pose graph
+      Enabled: true
+      Topic:
+        Value: /slam_toolbox/graph_visualization
+        Durability Policy: Volatile
+        Reliability Policy: Reliable
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Marker Scale: 0.5
+      Show Arrows: false
+      Show Axes: true
+      Show Names: true
+      Update Interval: 0
+      Frames:
+        All Enabled: false
+        map:
+          Value: true
+        odom:
+          Value: true
+        pelvis:
+          Value: true
+        lidar:
+          Value: true
+    - Class: rviz_default_plugins/Odometry
+      Name: Duong di (odom - co TROI)
+      Enabled: true
+      Topic:
+        Value: /odom
+        Reliability Policy: Reliable
+      Keep: 500
+      Position Tolerance: 0.15
+      Angle Tolerance: 0.15
+      Shape:
+        Value: Arrow
+        Alpha: 0.6
+        Color: 90; 220; 140
+        Shaft Length: 0.2
+        Shaft Diameter: 0.025
+        Head Length: 0.07
+        Head Diameter: 0.06
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Name: Current View
+      Distance: 18
+      Pitch: 1.2
+      Yaw: 1.57
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Near Clip Distance: 0.01
+Window Geometry:
+  Height: 950
+  Width: 1600
+  Displays:
+    collapsed: false

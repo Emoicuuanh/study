@@ -1,0 +1,78 @@
+# FAST-LIO cho G1 trong Isaac Sim - LiDAR Ouster OS0 128 tia + IMU 500Hz
+#
+# Dua tren config/ouster64.yaml cua FAST_LIO_ROS2, nhung KHAC 5 diem quan
+# trong. Ghi ro tung diem vi day la cho de sai nhat.
+/**:
+    ros__parameters:
+        feature_extract_enable: false
+        point_filter_num: 3        # lay 1 diem moi 3 diem - giam tai tinh toan
+        max_iteration: 3
+        # 0.3 m thay vi 0.5 m: phong chi 14x14 m, can chi tiet hon ban goc
+        # (ban goc dung cho xe ngoai troi quet hang tram met)
+        filter_size_surf: 0.3
+        filter_size_map: 0.3
+        # 100 m thay vi 1000 m: kich thuoc "khoi ban do" giu trong bo nho.
+        # Phong 14x14 m thi 100 m la du rong, dat lon hon chi ton RAM.
+        cube_side_length: 100.0
+        runtime_pos_log_enable: false
+        map_file_path: "./g1_room.pcd"
+
+        common:
+            # KHAC 1: doc /points_ts, KHONG phai /points.
+            # Isaac Sim phat /points chi co x,y,z (point_step=12). FAST-LIO
+            # can them `time` (thoi diem do cua tung diem) va `ring`.
+            # Node scripts/lidar_add_fields.py bo sung hai truong do va phat
+            # ra /points_ts. Xem docstring node do de biet cach suy `time`.
+            lid_topic:  "/points_ts"
+            imu_topic:  "/imu"
+            time_sync_en: false
+            time_offset_lidar_to_imu: 0.0
+
+        preprocess:
+            # KHAC 2: lidar_type = 2 (VELO16 = kieu Velodyne), khong phai 3
+            # (OUST64). Du LiDAR mo phong LA Ouster.
+            # Ly do: nhanh xu ly OUST64 doc cac truong rieng cua Ouster
+            # (t kieu uint32, reflectivity, ambient, range). Node chuyen doi
+            # cua ta phat theo kieu velodyne_ros::Point don gian hon:
+            #     x, y, z, intensity, time (float32), ring (uint16)
+            # nen phai khai bao dung kieu do.
+            lidar_type: 2
+            # KHAC 3: 128 tia (OS0-128), ban goc la 64
+            scan_line: 128
+            # KHAC 4: don vi thoi gian = 0 (GIAY). Ban goc dung 3 (nano giay)
+            # vi Ouster that phat uint32 nano giay. Ta phat float32 giay.
+            # Sai cho nay -> thoi gian lech 10^9 lan -> go meo pha huy ban do.
+            timestamp_unit: 0
+            blind: 0.6           # bo diem gan hon 0.6 m (than robot)
+            scan_rate: 10        # LiDAR 10 Hz
+
+        mapping:
+            acc_cov: 0.1
+            gyr_cov: 0.1
+            b_acc_cov: 0.0001
+            b_gyr_cov: 0.0001
+            fov_degree:    360.0
+            det_range:     80.0
+            # KHAC 5: extrinsic IMU->LiDAR la MA TRAN DON VI, va tat uoc
+            # luong truc tuyen.
+            # Ly do: trong isaac/sensors/imu.py ta co Y dat IMU DUNG CHO
+            # voi LiDAR (cung la con cua pelvis, cung offset [0,0,0.45],
+            # khong xoay). Nen phep bien doi giua chung la dong nhat.
+            # Tren robot THAT hai cam bien lech nhau vai cm va phai hieu
+            # chuan - luc do moi bat extrinsic_est_en.
+            extrinsic_est_en:  false
+            extrinsic_T: [ 0.0, 0.0, 0.0 ]
+            extrinsic_R: [1.0, 0.0, 0.0,
+                          0.0, 1.0, 0.0,
+                          0.0, 0.0, 1.0]
+
+        publish:
+            path_en:  true
+            scan_publish_en:  true
+            dense_publish_en: true
+            scan_bodyframe_pub_en: true
+            tf_en: true               # phat TF camera_init -> body
+
+        pcd_save:
+            pcd_save_en: true         # luu ban do 3D ra ./g1_room.pcd khi tat
+            interval: -1

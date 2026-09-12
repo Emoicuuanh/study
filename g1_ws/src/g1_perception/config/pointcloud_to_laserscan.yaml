@@ -1,0 +1,46 @@
+/**:
+  ros__parameters:
+    use_sim_time: true
+
+    # Frame dich cua LaserScan.
+    #
+    # KHONG dung "pelvis" - da thu va THAT BAI: pelvis nghieng ~3 do khi robot
+    # di bo, lam dai chieu cao lac theo va cat vao MAT SAN o tam xa. Ket qua
+    # la mot vanh tron doi xung xoay trong ban do, scan matching mat rang buoc
+    # goc quay, 7 khoi vat can bi ve thanh ~20 ban sao, TF map->odom lech 9.3 m.
+    #
+    # "pelvis_stab" cung vi tri voi pelvis nhung DA BO roll/pitch - do node
+    # scripts/stabilize_frame.py phat ra. Dai chieu cao trong frame nay luon
+    # thuc su nam ngang.
+    target_frame: pelvis_stab
+    transform_tolerance: 0.05
+
+    # === DAI CHIEU CAO - phan quan trong nhat cua file nay ===
+    # Trong he pelvis_stab (goc o z=0.777 the gioi, KHONG nghieng):
+    #     mat san      z = -0.777
+    #     dinh vat can z = +0.223   (khoi 1.0m cao, dat tren san)
+    # Ta lay dai -0.55 .. +0.20:
+    #   - Chan duoi -0.55 de KHONG bat mat san (con 22 cm khoang trong).
+    #     Vi frame da khu nghieng, 22 cm nay khong con bi goc nghieng an mon.
+    #   - Chan tren +0.20 vi tren nua khong con gi (vat can chi cao 1.0m).
+    min_height: -0.55
+    max_height: 0.20
+
+    # Quet tron 360 do. angle_increment khop voi LiDAR OS0 512 diem/vong
+    # (2*pi/512 = 0.01227 rad). Dat nho hon se de lai KHE TRONG giua cac tia.
+    angle_min: -3.14159
+    angle_max: 3.14159
+    angle_increment: 0.01227
+    scan_time: 0.1              # LiDAR 10Hz
+
+    # range_max 6.0 chu khong 75.0 (kha nang toi da cua LiDAR).
+    # Ly do: LiDAR OS0 co goc doc +-45 do va dat cao 1.23 m. Nhung tia huong
+    # xuong deu ket thuc o mat san; cang xa thi tia cang gan nam ngang nen
+    # khoang cach den san cang lon. Gioi han 6.0 m giu ban do gon va giam
+    # anh huong cua sai so goc o tam xa (1 do o 20 m = 0.35 m lech).
+    range_min: 0.6
+    range_max: 6.0
+
+    use_inf: true
+    inf_epsilon: 1.0
+    concurrency_level: 1

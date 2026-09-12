@@ -1,0 +1,1129 @@
+<title>Sổ tay Humanoid G1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+  :root {
+    --ink:      #14181c;
+    --paper:    #eef1f4;
+    --surface:  #f9fafb;
+    --sunken:   #e3e8ed;
+    --steel:    #58636f;
+    --rule:     #ccd4dc;
+    --trace:    #0d7d78;
+    --trace-bg: #dceeed;
+    --fault:    #a4462d;
+    --fault-bg: #f4e3dd;
+
+    --f-disp: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --f-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink:      #e4e9ee;
+      --paper:    #0f151a;
+      --surface:  #171f26;
+      --sunken:   #1d262e;
+      --steel:    #8493a1;
+      --rule:     #29333c;
+      --trace:    #45c4ba;
+      --trace-bg: #12312f;
+      --fault:    #d4795c;
+      --fault-bg: #33201a;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ink:      #e4e9ee;
+    --paper:    #0f151a;
+    --surface:  #171f26;
+    --sunken:   #1d262e;
+    --steel:    #8493a1;
+    --rule:     #29333c;
+    --trace:    #45c4ba;
+    --trace-bg: #12312f;
+    --fault:    #d4795c;
+    --fault-bg: #33201a;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 24px 96px; }
+
+  /* ---------- masthead ---------- */
+  .mast { padding: 72px 0 36px; border-bottom: 2px solid var(--ink); }
+  .mast .kicker {
+    font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--trace); margin: 0 0 18px;
+  }
+  .mast h1 {
+    font-family: var(--f-disp); font-weight: 700;
+    font-size: clamp(2.1rem, 6vw, 3.1rem); line-height: 1.05;
+    letter-spacing: -.02em; margin: 0 0 16px; text-wrap: balance;
+  }
+  .mast .standfirst {
+    font-size: 1.12rem; color: var(--steel); margin: 0; max-width: 60ch;
+  }
+
+  /* legend of the four registers */
+  .legend {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+    gap: 10px; margin: 30px 0 0;
+  }
+  .legend div {
+    font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .05em;
+    color: var(--steel); padding-left: 11px; line-height: 1.5;
+  }
+  .legend .l-th { border-left: 3px solid var(--steel); }
+  .legend .l-fx { border-left: 3px solid var(--trace); }
+  .legend .l-me { border-left: 3px solid var(--trace); background: var(--trace-bg); padding: 4px 0 4px 11px; }
+  .legend .l-fa { border-left: 3px solid var(--fault); background: var(--fault-bg); padding: 4px 0 4px 11px; }
+
+  /* ---------- part headers ---------- */
+  .part {
+    margin: 84px 0 0; padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+    display: flex; align-items: baseline; gap: 14px;
+  }
+  .part span {
+    font-family: var(--f-mono); font-size: 11px; font-weight: 700;
+    letter-spacing: .12em; color: var(--trace); flex: none;
+  }
+  .part h2 {
+    font-family: var(--f-disp); font-weight: 600; font-size: 1.5rem;
+    letter-spacing: -.01em; margin: 0;
+  }
+  .part-note { color: var(--steel); font-size: .97rem; margin: 14px 0 0; }
+
+  /* ---------- entry ---------- */
+  .entry { padding: 34px 0; border-bottom: 1px solid var(--rule); }
+  .entry:last-child { border-bottom: none; }
+
+  .tag {
+    font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--steel);
+    display: block; margin: 0 0 8px;
+  }
+  .entry h3 {
+    font-family: var(--f-disp); font-weight: 600; font-size: 1.16rem;
+    line-height: 1.34; margin: 0 0 14px; text-wrap: balance;
+  }
+  .entry p { margin: 0 0 14px; }
+  .entry p:last-child { margin-bottom: 0; }
+  .entry ul { margin: 0 0 14px; padding-left: 1.15em; }
+  .entry li { margin: 0 0 5px; }
+
+  code {
+    font-family: var(--f-mono); font-size: .855em;
+    background: var(--sunken); padding: .1em .34em; border-radius: 2px;
+  }
+
+  /* register 1 — theory */
+  .theory {
+    background: var(--sunken); border-left: 3px solid var(--steel);
+    padding: 15px 18px; margin: 0 0 16px;
+  }
+  .theory .lbl {
+    font-family: var(--f-mono); font-size: 10px; font-weight: 700;
+    letter-spacing: .11em; text-transform: uppercase; color: var(--steel);
+    display: block; margin: 0 0 9px;
+  }
+  .theory p { margin: 0 0 10px; font-size: .975rem; }
+  .theory p:last-child { margin-bottom: 0; }
+  .theory pre {
+    font-family: var(--f-mono); font-size: .83rem; line-height: 1.7;
+    margin: 10px 0; white-space: pre; overflow-x: auto;
+    font-variant-numeric: tabular-nums; color: var(--ink);
+  }
+
+  /* register 2 — formula */
+  .fx {
+    font-family: var(--f-mono); font-size: .875rem; line-height: 1.65;
+    background: var(--surface); border-left: 3px solid var(--trace);
+    padding: 13px 16px; margin: 0 0 16px; overflow-x: auto;
+    white-space: pre; font-variant-numeric: tabular-nums;
+  }
+
+  /* register 3 — measurement */
+  .meas { background: var(--trace-bg); padding: 14px 16px; margin: 0 0 16px; overflow-x: auto; }
+  .meas .lbl {
+    font-family: var(--f-mono); font-size: 10px; font-weight: 700;
+    letter-spacing: .11em; text-transform: uppercase; color: var(--trace);
+    display: block; margin: 0 0 9px;
+  }
+  .meas pre {
+    font-family: var(--f-mono); font-size: .855rem; line-height: 1.7;
+    margin: 0; white-space: pre; font-variant-numeric: tabular-nums; color: var(--ink);
+  }
+
+  /* register 4 — failed attempt */
+  .fault { background: var(--fault-bg); padding: 14px 16px; margin: 0 0 16px; overflow-x: auto; }
+  .fault .lbl {
+    font-family: var(--f-mono); font-size: 10px; font-weight: 700;
+    letter-spacing: .11em; text-transform: uppercase; color: var(--fault);
+    display: block; margin: 0 0 9px;
+  }
+  .fault p { margin: 0 0 8px; font-size: .96rem; }
+  .fault p:last-child { margin-bottom: 0; }
+  .fault pre {
+    font-family: var(--f-mono); font-size: .845rem; line-height: 1.7;
+    margin: 8px 0 0; white-space: pre; font-variant-numeric: tabular-nums; color: var(--ink);
+  }
+
+  .file { font-family: var(--f-mono); font-size: .78rem; color: var(--steel); margin: 14px 0 0; }
+
+  /* ---------- tables ---------- */
+  .tbl-wrap { overflow-x: auto; margin: 0 0 18px; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  th, td {
+    text-align: left; padding: 9px 12px 9px 0;
+    border-bottom: 1px solid var(--rule); vertical-align: top;
+  }
+  th {
+    font-family: var(--f-mono); font-size: 10px; font-weight: 700;
+    letter-spacing: .09em; text-transform: uppercase; color: var(--steel);
+    border-bottom: 1px solid var(--ink); white-space: nowrap;
+  }
+  td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.was { color: var(--fault); }
+  td.now { color: var(--trace); font-weight: 500; }
+  td.rw { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.pos { color: var(--trace); }
+  td.neg { color: var(--fault); }
+
+  /* ---------- lesson cards ---------- */
+  .lesson {
+    background: var(--surface); border: 1px solid var(--rule);
+    padding: 22px 24px; margin: 0 0 14px;
+  }
+  .lesson h3 { font-family: var(--f-disp); font-weight: 600; font-size: 1.06rem; margin: 0 0 10px; }
+  .lesson h3 b {
+    font-family: var(--f-mono); font-size: 11px; font-weight: 700;
+    color: var(--trace); margin-right: 9px; letter-spacing: .06em;
+  }
+  .lesson p { margin: 0 0 10px; font-size: .98rem; }
+  .lesson p:last-child { margin-bottom: 0; }
+  .lesson .cases {
+    font-family: var(--f-mono); font-size: .8rem; line-height: 1.75;
+    color: var(--steel); border-top: 1px dashed var(--rule);
+    padding-top: 10px; margin-top: 12px; white-space: pre-wrap;
+  }
+
+  /* ---------- stack ---------- */
+  .stack { list-style: none; padding: 0; margin: 0; }
+  .stack li {
+    display: grid; grid-template-columns: 68px 1fr; gap: 16px;
+    padding: 13px 0; border-bottom: 1px solid var(--rule); align-items: baseline;
+  }
+  .stack .lv {
+    font-family: var(--f-mono); font-size: 10px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--steel);
+  }
+  .stack .done .lv { color: var(--trace); }
+  .stack b { font-family: var(--f-disp); font-weight: 600; font-size: 1rem; }
+  .stack span.d { color: var(--steel); font-size: .93rem; display: block; }
+
+  /* ---------- footer ---------- */
+  .foot {
+    margin: 72px 0 0; padding-top: 22px; border-top: 2px solid var(--ink);
+    font-size: .9rem; color: var(--steel);
+  }
+  .foot p { margin: 0 0 8px; }
+
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    .wrap { padding: 0 18px 72px; }
+    .mast { padding-top: 48px; }
+    .stack li { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <p class="kicker">Rà soát lý thuyết &amp; thực hành · Unitree G1</p>
+    <h1>Sổ tay Humanoid G1</h1>
+    <p class="standfirst">Mỗi khái niệm ở đây có bốn tầng: lý thuyết nền, công thức, số đo thật, và — phần lớn — một lần thử thất bại. Tầng cuối là thứ không có trong sách.</p>
+
+    <div class="legend">
+      <div class="l-th">LÝ THUYẾT<br>khái niệm nền</div>
+      <div class="l-fx">CÔNG THỨC<br>dạng dùng trong code</div>
+      <div class="l-me">SỐ ĐO<br>đo được trên máy</div>
+      <div class="l-fa">THẤT BẠI<br>đã thử, đã sai</div>
+    </div>
+  </header>
+
+  <!-- ============ PHẦN I ============ -->
+  <div class="part"><span>PHẦN I</span><h2>Điều khiển cổ điển trong MuJoCo</h2></div>
+  <p class="part-note">Chín tuần này <em>là</em> một chuỗi — mỗi tuần dựa trên tuần trước, nên được đánh số. Code ở <code>~/study/week*.py</code>.</p>
+
+  <section class="entry">
+    <span class="tag">Tuần 1 · Biểu diễn trạng thái</span>
+    <h3>Floating base, và vì sao <code>nq ≠ nv</code></h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Không gian cấu hình.</strong> Trạng thái robot là một điểm trong không gian cấu hình. Với tay máy công nghiệp bắt vít xuống sàn, không gian đó chỉ gồm các góc khớp. Humanoid thì thân trôi tự do trong 3D, nên phải thêm 6 bậc tự do "ảo" cho thân — gọi là <strong>floating base</strong>.</p>
+      <p><strong>Thiếu cơ cấu chấp hành (underactuation).</strong> Đây là hệ quả quan trọng nhất và cũng là điều làm humanoid khó:</p>
+      <pre>bậc tự do vận tốc   35
+động cơ             29
+                  ─────
+không có động cơ     6   ← chính là floating base</pre>
+      <p>Sáu bậc này không thể điều khiển trực tiếp. Muốn dịch chuyển thân, phải <strong>mượn lực tiếp xúc chân–sàn</strong>. Và lực tiếp xúc chỉ <em>đẩy</em> được, không <em>hút</em> được — ràng buộc một chiều này quay lại ám mọi bài toán về sau, kể cả thất bại của WBC ở tuần 9.</p>
+      <p><strong>Vì sao quaternion.</strong> Hướng xoay trong 3D chỉ có 3 bậc tự do, nhưng biểu diễn bằng 3 số (Euler) thì gặp <strong>gimbal lock</strong>: ở một số tư thế, hai trục trùng nhau và mất một bậc tự do. Quaternion dùng 4 số với một ràng buộc chuẩn hóa — dư một số nhưng không có điểm kỳ dị nào, và nội suy mượt.</p>
+    </div>
+    <div class="meas">
+      <span class="lbl">Đo trên model G1</span>
+      <pre>nq (vị trí)   36      nv (vận tốc)  35
+actuator      29      khối lượng    33.34 kg
+khớp đầu tiên: loại `free`</pre>
+    </div>
+    <p>Chênh lệch 36 − 35 = 1 chính là số dư của quaternion: 4 số cho hướng, nhưng vận tốc góc chỉ cần 3.</p>
+    <div class="fault">
+      <span class="lbl">Bẫy thứ tự quaternion</span>
+      <p>MuJoCo lưu <code>(w,x,y,z)</code>, còn ROS và Pinocchio dùng <code>(x,y,z,w)</code>. Chuyển dữ liệu mà quên đảo → FK sai hoàn toàn, <strong>không báo lỗi gì</strong>. Cách phòng: kiểm tra chéo FK của hai thư viện trên cùng tư thế, chênh lệch phải bằng 0.</p>
+    </div>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Tuần 2 · Giao diện động cơ</span>
+    <h3>Ba chế độ lệnh, và PD như lò xo ảo</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Ba chế độ.</strong> Động cơ nhận lệnh theo <em>torque</em> (mô-men thô), <em>velocity</em> (giữ tốc độ), hoặc <em>position</em> (servo tự tới đích, có PD chạy ngầm bên trong). Cùng một mảng số, ba nghĩa hoàn toàn khác nhau.</p>
+      <p><strong>PD là lò xo cộng giảm chấn.</strong> Đây là cách hiểu vật lý đúng nhất:</p>
+      <pre>tau = kp·(q_target − q)  −  kd·q̇
+       └─ lò xo kéo về ─┘   └ giảm chấn phanh ┘</pre>
+      <p>Ghép với quán tính khớp, hệ kín thành dao động bậc hai:</p>
+      <pre>I·q̈ + kd·q̇ + kp·q = kp·q_target
+
+ω_n = √(kp/I)      tần số riêng — "nhanh nhạy"
+ζ   = kd/(2√(kp·I)) tỉ số giảm chấn — "có rung không"
+     ζ < 1 vọt quá rồi rung · ζ = 1 tới hạn · ζ > 1 chậm, không rung</pre>
+      <p><strong>Vì sao PD vị trí thuần túy không giữ được thăng bằng.</strong> PD chỉ biết <em>góc khớp</em>. Nó không có khái niệm nào về khối tâm, về điểm tiếp xúc, về việc robot đang đổ. Bị đẩy mạnh, nó vẫn kiên quyết giữ đúng góc khớp cũ — và đổ nguyên khối như một pho tượng. Giữ thăng bằng cần thông tin ở tầng cao hơn: khối tâm và lực tiếp xúc.</p>
+    </div>
+    <div class="fault">
+      <span class="lbl">Lỗi đã mắc</span>
+      <p>Ghi giá trị mô-men vào interface <code>position</code>. Con số bị hiểu thành góc mục tiêu — mô-men 15 N·m thành "bẻ khớp tới 15 rad ≈ 860°". Robot vặn xoắn rồi sụp.</p>
+      <pre>SAI  data.ctrl[:] = tau
+ĐÚNG data.ctrl[:] = q_ref</pre>
+    </div>
+    <p class="file">week1_inspect_g1.py · week2_pd_stand.py</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Tuần 3 · Sinh quỹ đạo</span>
+    <h3>Khởi động mượt và quy tắc −θ / +2θ / −θ</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Tính liên tục của quỹ đạo.</strong> Một quỹ đạo dùng được cho robot cần liên tục không chỉ về <em>giá trị</em> mà cả về <em>đạo hàm</em>. Nhảy bậc ở giá trị đòi vận tốc vô hạn; nhảy bậc ở vận tốc đòi gia tốc vô hạn, tức mô-men vô hạn — động cơ không làm được, và nó xuất hiện thành cú giật.</p>
+      <pre>tại t = 0:
+  A·sin(2πft)          giá trị 0  ✓   vận tốc CỰC ĐẠI  ✗
+  A·(1−cos(2πft))/2    giá trị 0  ✓   vận tốc 0        ✓</pre>
+      <p><strong>Ràng buộc chuỗi động học.</strong> Quy tắc <strong>−θ ở hông, +2θ ở gối, −θ ở cổ chân</strong> giữ thân thẳng đứng khi ngồi xuống. Lý do hình học: hông và cổ chân xoay cùng chiều nhau và ngược chiều gối; tổng góc xoay tích lũy dọc chuỗi bằng <code>−θ + 2θ − θ = 0</code>, nên hướng của bàn chân so với thân không đổi. Chỉ còn lại chuyển động hạ thấp thuần túy.</p>
+    </div>
+    <div class="fx">theta = A · (1 − cos(2πft)) / 2</div>
+    <div class="meas">
+      <span class="lbl">Tham số đang dùng</span>
+      <pre>A = 0.8          biên độ squat
+f_arm = 1.4      tay vẫy nhanh gấp đôi nhịp squat</pre>
+    </div>
+    <p class="file">week3_squat.py · week3_squat_wave.py</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Tuần 4 · Động học nghịch</span>
+    <h3>Jacobian, điểm kỳ dị, và không gian rỗng</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Jacobian là gì.</strong> Động học thuận <code>x = f(q)</code> là hàm phi tuyến từ góc khớp sang vị trí tay. Jacobian là <em>tuyến tính hóa cục bộ</em> của hàm đó — ma trận biến vận tốc khớp thành vận tốc tay:</p>
+      <pre>ẋ = J(q) · q̇        J là 3×7 với tay 7 bậc, đích 3D</pre>
+      <p>Nó cũng chuyển lực theo chiều ngược: <code>tau = Jᵀ·F</code>. Đây là cách WBC ở tuần 9 chuyển nhiệm vụ ở không gian tay thành lệnh ở không gian khớp.</p>
+      <p><strong>Vì sao không dùng <code>J⁻¹</code>.</strong> <code>J</code> là 3×7 — không vuông, không có nghịch đảo. Có thể dùng pseudo-inverse, nhưng nó nổ ở <strong>điểm kỳ dị</strong>: khi cánh tay duỗi thẳng, <code>J</code> bị suy giảm hạng (rank deficiency), một hướng chuyển động của tay đòi vận tốc khớp vô hạn.</p>
+      <p><strong>Damped least squares.</strong> Số hạng <code>λ²I</code> là chính quy hóa Tikhonov — cộng một lượng nhỏ vào đường chéo nên ma trận không bao giờ suy biến. Bản chất là <em>đánh đổi chính xác lấy không bao giờ nổ</em>: ở tư thế bình thường sai số nhỏ, ở gần điểm kỳ dị thì chuyển động chậm lại thay vì phát điên.</p>
+      <p><strong>Không gian rỗng và tính dư.</strong> Tay 7 bậc, đích 3D → thừa 4 bậc. Tập các <code>q̇</code> không làm tay dịch chuyển gì cả là <em>kernel</em> của <code>J</code>, số chiều <code>7 − 3 = 4</code>. Toán tử chiếu:</p>
+      <pre>N = I − J⁺J       chiếu vào không gian rỗng
+q̇ = q̇_IK + N·(nhiệm vụ phụ)</pre>
+      <p>Nhiệm vụ phụ đi qua <code>N</code> nên <strong>không bao giờ phá nhiệm vụ chính</strong>. Đó là cách dùng phần dư để làm việc khác: tránh giới hạn khớp, tránh va chạm, giữ tư thế dễ coi.</p>
+    </div>
+    <div class="fx">dq = Jᵀ · (J Jᵀ + λ²I)⁻¹ · err</div>
+    <div class="meas">
+      <span class="lbl">Tham số đã tinh chỉnh</span>
+      <pre>LAMBDA    = 0.05     damping chống singularity
+GAIN      = 0.10     tỉ lệ bước
+MAX_STEP  = 0.003    rad mỗi vòng (≈ 1.5 rad/s)
+NULL_GAIN = 0.05     kéo nhẹ về tư thế phụ</pre>
+    </div>
+    <div class="fault">
+      <span class="lbl">Ba lỗi liên tiếp ở tuần này</span>
+      <p><strong>Integrator windup.</strong> Không kẹp góc mục tiêu vào giới hạn khớp → mục tiêu khuỷu tay tích lũy tới <strong>17 rad</strong> (≈ 974°). Sửa bằng <code>np.clip</code> theo <code>actuator_ctrlrange</code>.</p>
+      <p><strong>Vi phạm tách thang thời gian.</strong> Mục tiêu di chuyển 10 rad/s, khớp phải chạy 25 rad/s để bám → robot đổ. Sửa bằng <code>MAX_STEP = 0.003</code>.</p>
+      <p><strong>Windup trong null-space.</strong> Dồn "vận tốc" vào biến tích lũy khiến nó bị kẹp trần <code>MAX_STEP</code> suốt nửa chu kỳ.</p>
+      <pre>sai số vị trí tay:  140 mm  →  5 mm
+(chuyển từ "vận tốc phụ" sang "tư thế phụ + gain nhỏ")</pre>
+    </div>
+    <p class="file">week4_ik_reach.py · week4_nullspace.py</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Tuần 5 · Điều khiển tối ưu</span>
+    <h3>LQR: Q và R là bản khai báo ưu tiên</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Bài toán.</strong> Cho hệ tuyến tính <code>ẋ = Ax + Bu</code>, tìm luật điều khiển tối thiểu hóa chi phí tích lũy trên thời gian vô hạn:</p>
+      <pre>J = ∫ (xᵀQx  +  uᵀRu) dt
+        └ sai lệch ┘  └ công sức ┘</pre>
+      <p><strong>Nghiệm.</strong> Điều kỳ diệu của LQR là nghiệm tối ưu có dạng <em>đóng</em> và là phản hồi tuyến tính tĩnh <code>u = −Kx</code> — không cần tối ưu lại mỗi bước như MPC. <code>K</code> tính từ nghiệm phương trình Riccati đại số:</p>
+      <pre>AᵀP + PA − PBR⁻¹BᵀP + Q = 0     giải ra P
+K = R⁻¹BᵀP</pre>
+      <p><strong>Đọc Q và R.</strong> Chỉ <em>tỉ lệ</em> giữa chúng có ý nghĩa, không phải giá trị tuyệt đối. <code>Q</code> lớn hơn <code>R</code> → bộ điều khiển hung hãn, sửa lỗi nhanh, tốn lực. <code>R</code> lớn hơn → tiết kiệm, mượt, chậm. Từng phần tử trên đường chéo <code>Q</code> nói "trạng thái này quan trọng cỡ nào".</p>
+      <p><strong>Giới hạn cốt lõi.</strong> <code>A</code> và <code>B</code> là mô hình đã <em>tuyến tính hóa</em> quanh điểm cân bằng. Gậy nghiêng 80° thì <code>sin θ ≈ θ</code> không còn đúng và bộ điều khiển tính sai hoàn toàn. LQR là bộ <em>giữ</em> cân bằng, không phải bộ <em>lấy lại</em> cân bằng từ xa.</p>
+    </div>
+    <div class="fx">P  ←  solve_continuous_are(A, B, Q, R)
+K  =  R⁻¹ Bᵀ P
+u  = −K x</div>
+    <div class="meas">
+      <span class="lbl">Cấu hình hiện tại (cartpole)</span>
+      <pre>Q = diag([1.0, 0.1, 10.0, 0.5])
+                        ↑ phạt GÓC GẬY mạnh nhất
+R = [[0.05]]            cho phép dùng lực khá mạnh</pre>
+    </div>
+    <p class="file">week5_lqr_cartpole.py · cartpole.xml</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Tuần 6 · Thăng bằng</span>
+    <h3>Capture point là thành phần phân kỳ của chuyển động</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Mô hình LIPM.</strong> Con lắc ngược tuyến tính: giả định khối tâm giữ <em>chiều cao không đổi</em>, bàn chân là một điểm, bỏ qua mô-men động lượng của thân. Khi đó động lực học rút gọn thành:</p>
+      <pre>ẍ = ω₀² · (x − x_foot)        với  ω₀ = √(g / z_com)</pre>
+      <p><strong>Hai chế độ, một cái phân kỳ.</strong> Hệ này có hai trị riêng <code>±ω₀</code> — <em>thực</em>, và một cái <em>dương</em>. Trị riêng dương nghĩa là hệ <strong>phân kỳ</strong>: lệch khỏi cân bằng thì càng lệch thêm, không dao động quanh nó. Đó là lý do đứng bằng hai chân khó về bản chất.</p>
+      <p>Tách trạng thái theo hai chế độ, thành phần ứng với trị riêng dương là:</p>
+      <pre>x_cp = x + ẋ/ω₀        thành phần PHÂN KỲ (DCM)</pre>
+      <p><strong>Capture point là gì.</strong> Nếu đặt chân <em>đúng vào</em> <code>x_cp</code> thì thành phần phân kỳ bị triệt tiêu — robot dừng lại đứng yên. Đây không phải một heuristic mà là hệ quả trực tiếp của phân tích trị riêng. Số hạng <code>ẋ/ω₀</code> là phần "đà"; <code>ω₀</code> biến vận tốc thành khoảng cách nên hai số hạng cùng đơn vị mét.</p>
+      <p><strong>Capturability region.</strong> Tập các cú đẩy còn cứu được. Nó bị chặn bởi <em>chiều dài chân</em>: nếu <code>x_cp</code> nằm xa hơn bước dài nhất robot với tới, không thuật toán nào cứu được. Đây là giới hạn <strong>vật lý</strong>, không phải giới hạn điều khiển — điểm này quay lại ở tuần 8.</p>
+    </div>
+    <div class="fx">ω₀   = √(g / z_com)
+x_cp = x + ẋ / ω₀</div>
+    <div class="meas">
+      <span class="lbl">Thử nghiệm đẩy</span>
+      <pre>lực đẩy đầu tiên  35 N
+cp = com + com_vel / omega0</pre>
+    </div>
+    <p class="file">week6_capture_point.py</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Tuần 7 · Hoạch định bước</span>
+    <h3>LIPM giải đóng bằng cosh/sinh</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Vì sao cosh/sinh, không phải cos/sin.</strong> Nghiệm của <code>ẍ = ω₀²x</code> dùng hàm <em>hyperbolic</em> vì trị riêng là số <em>thực</em> <code>±ω₀</code>. Nếu là <code>ẍ = −ω₀²x</code> (con lắc thường, trị riêng thuần ảo) thì nghiệm mới là <code>cos/sin</code> và dao động tuần hoàn. Dấu của trị riêng quyết định hình dạng nghiệm, và ở đây nó nói: <strong>phân kỳ theo hàm mũ</strong>.</p>
+      <pre>x(t) = x₀·cosh(ω₀t) + (ẋ₀/ω₀)·sinh(ω₀t)
+ẋ(t) = x₀ω₀·sinh(ω₀t) + ẋ₀·cosh(ω₀t)</pre>
+      <p><strong>Vì sao dùng mô hình đơn giản đến vậy.</strong> LIPM bỏ qua rất nhiều thứ, nhưng bù lại có nghiệm đóng — dự đoán được khối tâm ở đâu sau 0.3 giây mà không cần mô phỏng. Đó là điều bắt buộc để hoạch định bước <em>trong thời gian thực</em>. Đây là đánh đổi kinh điển: mô hình đủ đơn giản để giải nhanh, nhưng vẫn nắm đúng phần cốt lõi (tính phân kỳ).</p>
+      <p><strong>Giả định bị vi phạm ở đâu.</strong> Chiều cao khối tâm không thật sự cố định khi đi (robot nhún); bàn chân không phải một điểm (có diện tích, nên có thêm biên độ điều chỉnh bằng mô-men cổ chân); thân có mô-men động lượng. Mỗi giả định bị vi phạm là một nguồn sai lệch mà tầng điều khiển bên dưới phải hấp thụ.</p>
+    </div>
+    <div class="meas">
+      <span class="lbl">Ràng buộc dáng đi</span>
+      <pre>Z_COM    = 0.70 m    thấp hơn lúc đứng (~0.79) để hạ trọng tâm
+T_STEP   = 0.30 s    thời gian một bước
+MAX_STEP = 0.28 m    giới hạn VẬT LÝ của chân</pre>
+    </div>
+    <p class="file">week7_lipm_steps.py</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Tuần 8 · MPC</span>
+    <h3>Nhìn trước giúp gì, và không giúp gì</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Chân trời lùi (receding horizon).</strong> MPC tối ưu cả một chuỗi hành động trên <code>N</code> bước tới, <em>thực thi bước đầu tiên</em>, rồi bỏ phần còn lại và tối ưu lại từ trạng thái mới. Lặp lại mỗi chu kỳ.</p>
+      <pre>mỗi bước:  giải min Σ chi phí(k) với ràng buộc trên N bước
+           thực thi u₀
+           bỏ u₁…u_N, đo lại trạng thái, giải lại</pre>
+      <p><strong>Vì sao nó mạnh hơn greedy.</strong> Greedy chỉ tối ưu bước kế tiếp, nên có thể đi vào trạng thái mà <em>bước sau</em> không còn lựa chọn nào tốt. MPC thấy trước ràng buộc ở bước 3 và điều chỉnh ngay từ bước 1. Nó cũng xử lý ràng buộc tự nhiên — đưa vào bài toán tối ưu chứ không kẹp sau.</p>
+      <p><strong>Vì sao nó không phá được giới hạn vật lý.</strong> Nhìn trước bao xa cũng không mở rộng được <em>tập hành động khả thi</em>. Nếu chiều dài chân chỉ với tới 0.28 m thì mọi chuỗi kế hoạch đều bị chặn ở đó. MPC tối ưu <em>trong</em> tập khả thi, không mở rộng nó.</p>
+    </div>
+    <div class="fault">
+      <span class="lbl">Phép so sánh không công bằng — tự phát hiện</span>
+      <p>Bản MPC đầu tiên giả định bàn chân <em>dịch chuyển tức thời</em> tới vị trí mới trước khi robot đổ. Đó là ưu thế không có thật.</p>
+      <p>Sau khi khớp lại vật lý cho cả hai bên: MPC chỉ <strong>giảm số bước</strong> cần để hồi phục, <strong>không</strong> vượt được ngưỡng capturability.</p>
+    </div>
+    <p>Kết quả này giá trị hơn kết quả "MPC thắng": nó phân biệt được cái gì thuật toán cải thiện được và cái gì là chặn cứng của cơ khí.</p>
+    <p class="file">week8_mpc_lipm.py</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Tuần 9 · Whole-Body Control</span>
+    <h3>Nhiều nhiệm vụ, một bộ khớp</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Bài toán.</strong> Robot có nhiều nhiệm vụ cùng lúc (tay phải chạm bóng, tay trái chạm bóng khác, giữ tư thế) nhưng chỉ một bộ khớp. Các nhiệm vụ xung đột. WBC xếp tất cả thành <em>một</em> bài toán tối ưu và để phép giải quyết định ai nhường ai.</p>
+      <p><strong>Hai cách ưu tiên.</strong></p>
+      <pre>ưu tiên MỀM (trọng số)   min Σ wᵢ‖Jᵢq̇ − vᵢ‖²
+    nhiệm vụ ít quan trọng vẫn được làm MỘT PHẦN
+    → dùng ở tuần 9: W_R = 20 so với W_L = 1
+
+ưu tiên CỨNG (null-space)  nhiệm vụ phụ chiếu qua N
+    nhiệm vụ chính KHÔNG BAO GIỜ bị ảnh hưởng
+    → dùng ở tuần 4</pre>
+      <p><strong>Vì sao cần số hạng chính quy hóa.</strong> <code>W_REG·‖q̇‖²</code> phạt <em>mọi</em> chuyển động khớp. Với tay dư bậc, có vô số <code>q̇</code> cho cùng kết quả ở đầu tay — bài toán <em>vô định</em>. Số hạng này chọn nghiệm "ít cựa quậy nhất", vừa mượt hơn vừa làm bài toán well-posed về số học. Cùng bản chất với <code>λ²I</code> ở tuần 4.</p>
+      <p><strong>Ràng buộc phải nằm trong bài toán.</strong> Giới hạn vận tốc <code>DQ_MAX</code> được đưa vào <em>ràng buộc của QP</em>, không kẹp sau khi giải. Kẹp sau thì nghiệm không còn tối ưu — đúng bài học từ tuần 8.</p>
+    </div>
+    <div class="fx">min ‖ W_R (J_R dq − v_R) ‖²          tay phải, ưu tiên cao
+  + ‖ W_L (J_L dq − v_L) ‖²          tay trái, ưu tiên thấp
+  + ‖ W_REG · dq        ‖²          giảm chấn, ổn định số
+
+A = vstack([W_R·J_R, W_L·J_L, W_REG·I])
+res = lsq_linear(A, b, bounds=(−DQ_MAX, DQ_MAX))</div>
+    <div class="meas">
+      <span class="lbl">Trọng số hiện tại</span>
+      <pre>KP     = 4.0        (KHÔNG dùng 1/DT — xem lỗi bên dưới)
+W_R    = 20.0       tay phải ưu tiên cao
+W_L    = 1.0        tay trái nhường
+W_REG  = 0.5        giảm chấn
+DQ_MAX = 0.8 rad/s  đưa vào QP TỪ ĐẦU, không clip sau</pre>
+    </div>
+    <div class="fault">
+      <span class="lbl">Hai lỗi và một giới hạn thật</span>
+      <p><strong>Sai Jacobian khối tâm.</strong> Dùng <code>mj_jacSubtreeCom(..., torso_id)</code> nhưng lại so với <code>subtree_com[0]</code> — hai đại lượng của hai vật khác nhau.</p>
+      <p><strong>Gain quá lớn.</strong> Đặt <code>err/DT</code> cho gain ≈ 500 (đòi sửa hết lỗi trong một chu kỳ 2 ms), hệ mất ổn định. Hạ về <code>KP = 4.0</code>.</p>
+      <p><strong>Không phải bug:</strong> thêm khớp eo vào bài toán làm robot đổ. Đây là <strong>giới hạn thật của phương pháp</strong>. WBC ở tuần 9 làm việc ở <em>cấp độ động học</em> — chỉ Jacobian, biến là vận tốc khớp. Nó không có khối lượng, không có mô-men quán tính, và <strong>không có ràng buộc lực tiếp xúc</strong>. Thân trên xoay đủ để "giúp" khối tâm về đúng chỗ <em>theo toán</em>, nhưng tạo phản lực thật mà chân tĩnh không biết chống. Đây chính là lý do WBC sản xuất thật giải QP với <em>đầy đủ</em> động lực học <code>M(q)q̈ + C = τ + Jᵀf</code> và ràng buộc tiếp xúc.</p>
+    </div>
+    <p class="file">week9_wbc.py · scene_wbc.xml</p>
+  </section>
+  <!-- ============ PHẦN II ============ -->
+  <div class="part"><span>PHẦN II</span><h2>Học tăng cường</h2></div>
+  <p class="part-note">Phần này trước đây chỉ là một dòng TODO. Giờ có cả lý thuyết nền lẫn số liệu thật, vì bạn đang chạy chính policy mà Unitree huấn luyện. Cấu hình gốc ở <code>~/study/unitree_rl_gym/legged_gym/envs/g1/g1_config.py</code>.</p>
+
+  <section class="entry">
+    <span class="tag">Nền tảng</span>
+    <h3>MDP, POMDP, và policy là gì</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Bài toán ra quyết định tuần tự.</strong> Học tăng cường phát biểu mọi thứ dưới dạng <em>Markov Decision Process</em>: có trạng thái, hành động, phần thưởng, và xác suất chuyển trạng thái. Mục tiêu là tìm <strong>policy</strong> — quy tắc ánh xạ trạng thái sang hành động — sao cho tổng phần thưởng tích lũy lớn nhất.</p>
+      <pre>π(observation) → action
+với G1:  47 số vào  →  12 số ra (độ lệch góc khớp)</pre>
+      <p><strong>Khác gì điều khiển cổ điển.</strong> Ở phần I, mọi bộ điều khiển đều <em>suy ra từ mô hình toán</em> — Riccati cho LQR, Jacobian cho IK. Với policy thì không có công thức nào để viết ra: nó là hàng nghìn trọng số mà mạng tự tìm được qua thử–sai. Dùng RL khi động lực học quá phức tạp hoặc <em>gián đoạn</em> để viết công thức — mà tiếp xúc chân–sàn khi đi bộ đúng là như vậy: chạm, nhấc, va đập, trượt.</p>
+      <p><strong>Tính Markov và chỗ nó bị vi phạm.</strong> MDP giả định observation chứa <em>đủ</em> thông tin để ra quyết định tối ưu. Với G1 thì <strong>không</strong>:</p>
+      <pre>o[0:3]   vận tốc GÓC của thân          3
+o[3:6]   hướng trọng lực                3
+o[6:9]   lệnh (vx, vy, ω)               3
+o[9:21]  góc 12 khớp                   12
+o[21:33] vận tốc 12 khớp               12
+o[33:45] hành động trước               12
+o[45:47] pha bước (sin, cos)            2
+                                    ─────
+                                       47
+
+KHÔNG có: vận tốc THẲNG · lực tiếp xúc chân · độ dốc sàn</pre>
+      <p>Thiếu vận tốc thẳng là nghịch lý lớn nhất: lệnh <em>là</em> lệnh vận tốc, mà policy không đo được vận tốc. Vì sao lúc train không cho vào? Vì <strong>robot thật không có cảm biến nào đo trực tiếp vận tốc thẳng</strong> — GPS không dùng trong nhà, robot chân không có encoder bánh xe. Train với thông tin đó thì policy vô dụng khi triển khai.</p>
+      <p>Đây là <strong>POMDP</strong> — <em>Partially Observable</em> MDP. Cách giải tiêu chuẩn: cho mạng một <em>trí nhớ</em> để suy trạng thái ẩn từ lịch sử.</p>
+    </div>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Kiến trúc mạng</span>
+    <h3>Actor–Critic có hồi tiếp, và vì sao mạng lại nhỏ đến vậy</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Actor–Critic.</strong> Hai mạng, hai việc:</p>
+      <pre>actor   π(o) → action        cái ta chạy khi triển khai
+critic  V(o) → giá trị       CHỈ dùng lúc train</pre>
+      <p>Critic ước lượng "ở trạng thái này thì kỳ vọng tổng phần thưởng tương lai là bao nhiêu". Nó không điều khiển gì, nhưng làm <strong>giảm phương sai</strong> của gradient: thay vì học từ tổng phần thưởng thô (rất nhiễu), actor học từ <em>advantage</em> — hành động này tốt hơn <em>trung bình</em> bao nhiêu.</p>
+      <p><strong>Một mẹo chỉ mô phỏng cho phép.</strong> Vì critic bị bỏ đi sau khi train, nó được phép nhìn thông tin mà robot thật không có — vận tốc thẳng thật, lực tiếp xúc thật, ma sát thật. Gọi là <em>asymmetric actor-critic</em>: critic biết nhiều để dạy tốt, actor chỉ biết những gì cảm biến thật đo được.</p>
+      <p><strong>Vì sao có LSTM.</strong> Cấu hình ghi rõ <code>policy_class_name = "ActorCriticRecurrent"</code> — trí nhớ là <em>lựa chọn có chủ đích</em>, không phải tình cờ. Nó tồn tại để giải POMDP: nén lịch sử vào 64 số, và 64 số đó đóng vai "những gì tôi suy đoán được về trạng thái tôi không nhìn thấy" — trước hết là vận tốc thẳng, sau đó là chân nào đang chạm đất.</p>
+    </div>
+    <div class="meas">
+      <span class="lbl">Cấu hình mạng thật (g1_config.py)</span>
+      <pre>actor_hidden_dims   [32]         chỉ MỘT tầng ẩn 32 nơ-ron
+critic_hidden_dims  [32]
+activation          elu
+rnn_type            lstm
+rnn_hidden_size     64
+rnn_num_layers      1
+init_noise_std      0.8
+
+tổng trọng số (đọc từ motion.pt)   31 404</pre>
+    </div>
+    <p>Mạng <strong>rất nhỏ</strong> — 31 nghìn trọng số, cỡ vài trăm KB. Đây là chuyện thường trong locomotion: bài toán không cần dung lượng lớn, và mạng nhỏ thì suy diễn nhanh, chạy được trên máy tính onboard, và ít overfit vào chi tiết riêng của mô phỏng.</p>
+    <div class="meas">
+      <span class="lbl">Kiểm chứng LSTM có trí nhớ thật</span>
+      <pre>cùng MỘT observation, gọi ba lần:
+  lần 1  [-0.1413  0.3179  0.0500 -0.0885]
+  lần 2  [-0.2965 -0.2269  0.2551  0.4374]
+  lần 3  [-0.4009 -0.3613  0.2104  0.5029]
+
+|h| giây đầu 0.862 · giây thứ 10 0.862 · tỉ lệ 1.000 → BỊ CHẶN</pre>
+    </div>
+    <p>Nên đúng hơn phải viết <code>action, state′ = π(obs, state)</code>. Hàm <code>forward</code> đọc ngược từ TorchScript cho thấy nó <strong>tự ghi đè</strong> <code>hidden_state</code> và <code>cell_state</code> mỗi lần gọi. Trạng thái bị chặn, không phân kỳ — nên giả thuyết "LSTM tích lũy gây trôi" bị bác bỏ.</p>
+    <p class="file">isaac/tests/probe_lstm.py</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Thuật toán</span>
+    <h3>PPO: vùng tin cậy mà không cần đạo hàm cấp hai</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Policy gradient và vấn đề của nó.</strong> Ý tưởng gốc rất đơn giản: hành động nào dẫn tới phần thưởng cao thì tăng xác suất chọn nó. Nhưng cập nhật quá mạnh một lần là policy nhảy sang vùng tồi, và vì dữ liệu huấn luyện <em>do chính policy sinh ra</em>, nó không tự quay lại được — sụp đổ không hồi phục.</p>
+      <p><strong>Cách PPO chặn điều đó.</strong> Giới hạn mỗi lần cập nhật không đi quá xa policy cũ, bằng cách <em>kẹp</em> tỉ lệ xác suất:</p>
+      <pre>r  = π_mới(a|o) / π_cũ(a|o)          tỉ lệ thay đổi
+
+L = min( r·A ,  clip(r, 1−ε, 1+ε)·A )
+                └── nếu r ra ngoài [0.8, 1.2] thì
+                    kẹp lại → gradient bằng 0 →
+                    không thưởng cho việc đi xa thêm</pre>
+      <p>Cái tinh tế là <code>min</code>: nó chỉ chặn khi đi xa theo hướng <em>có lợi</em>, còn khi hành động tệ thì vẫn cho sửa mạnh. Tên "Proximal" là vậy — giữ policy mới <em>gần</em> policy cũ.</p>
+      <p><strong>Vì sao PPO thắng về mặt thực dụng.</strong> Có cách chặt chẽ hơn (TRPO) dùng ràng buộc KL và đạo hàm cấp hai, nhưng đắt và khó cài. PPO đạt hiệu quả tương đương chỉ bằng một phép kẹp trong hàm mất mát — cài mấy dòng, chạy nhanh, chịu được siêu tham số lệch. Đó là lý do gần như mọi công trình locomotion đều dùng nó.</p>
+      <p><strong>Hệ số entropy.</strong> <code>entropy_coef = 0.01</code> thưởng cho policy vì giữ tính <em>ngẫu nhiên</em>. Không có nó, policy sớm chốt vào một cách làm rồi ngừng khám phá — hội tụ vào cực trị địa phương. Đây là cách kiểm soát cân bằng khám phá/khai thác.</p>
+    </div>
+    <div class="meas">
+      <span class="lbl">Cấu hình huấn luyện</span>
+      <pre>algorithm        PPO
+entropy_coef     0.01
+max_iterations   10 000
+experiment_name  g1</pre>
+    </div>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Thiết kế phần thưởng</span>
+    <h3>Bảng phần thưởng thật — đọc được cả ý định thiết kế</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Phần thưởng là chỗ bạn <em>khai báo mong muốn</em>.</strong> Trong điều khiển cổ điển bạn viết ra <em>cách làm</em>; trong RL bạn chỉ nói <em>cái gì tốt</em>, còn cách làm để mạng tự tìm. Điều đó mạnh nhưng nguy hiểm: khai báo sai một chút, mạng sẽ tìm ra cách <em>lách</em> — gọi là <strong>reward hacking</strong>.</p>
+      <p><strong>Ba nhóm số hạng</strong> luôn xuất hiện trong locomotion:</p>
+      <pre>bám lệnh    thưởng khi vận tốc thật khớp lệnh
+ổn định     phạt nghiêng, nhún, lệch chiều cao
+tiết chế    phạt gia tốc/giật khớp, phạt chạm giới hạn
+            → không có nhóm này, mạng tìm ra dáng đi
+              "co giật" hiệu quả về số nhưng phá động cơ</pre>
+      <p><strong>Số hạng "còn sống".</strong> <code>alive = 0.15</code> thưởng mỗi bước robot chưa ngã. Nó tạo <em>tín hiệu dày</em>: nếu chỉ thưởng khi đi được xa, mạng lúc đầu ngã liên tục và gần như không nhận được tín hiệu gì để học.</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Số hạng</th><th>Trọng số</th><th>Ý nghĩa</th></tr></thead>
+        <tbody>
+          <tr><td>tracking_lin_vel</td><td class="rw pos">+1.0</td><td>bám lệnh vận tốc thẳng — nhiệm vụ chính</td></tr>
+          <tr><td>tracking_ang_vel</td><td class="rw pos">+0.5</td><td>bám lệnh xoay</td></tr>
+          <tr><td>contact</td><td class="rw pos">+0.18</td><td>chân tiếp xúc đúng pha bước</td></tr>
+          <tr><td>alive</td><td class="rw pos">+0.15</td><td>còn chưa ngã — tín hiệu dày để học</td></tr>
+          <tr><td>feet_swing_height</td><td class="rw neg">−20.0</td><td><strong>nặng nhất</strong> — sai chiều cao chân vung</td></tr>
+          <tr><td>base_height</td><td class="rw neg">−10.0</td><td>lệch khỏi 0.78 m</td></tr>
+          <tr><td>dof_pos_limits</td><td class="rw neg">−5.0</td><td>chạm giới hạn khớp</td></tr>
+          <tr><td>lin_vel_z</td><td class="rw neg">−2.0</td><td>nhún dọc — muốn thân đi ngang, không bồng bềnh</td></tr>
+          <tr><td>orientation</td><td class="rw neg">−1.0</td><td>thân nghiêng</td></tr>
+          <tr><td>hip_pos</td><td class="rw neg">−1.0</td><td>hông lệch khỏi tư thế trung tính</td></tr>
+          <tr><td>contact_no_vel</td><td class="rw neg">−0.2</td><td>chân chạm đất mà còn vận tốc → trượt</td></tr>
+          <tr><td>action_rate</td><td class="rw neg">−0.01</td><td>lệnh thay đổi đột ngột → giữ mượt</td></tr>
+          <tr><td>dof_vel</td><td class="rw neg">−1e-3</td><td>vận tốc khớp</td></tr>
+          <tr><td>ang_vel_xy</td><td class="rw neg">−0.05</td><td>lắc roll/pitch</td></tr>
+          <tr><td>dof_acc</td><td class="rw neg">−2.5e-7</td><td>gia tốc khớp — bảo vệ động cơ</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Hai điều bảng này giải thích ngay cho những gì bạn đã quan sát:</p>
+    <div class="meas">
+      <span class="lbl">Phần thưởng giải thích quan sát</span>
+      <pre>base_height_target = 0.78 m   →  robot đứng ở 0.777 m đo được
+feet_swing_height  = −20.0    →  trọng số NẶNG NHẤT, giải thích vì sao
+                                 dáng đi rất kỷ luật về độ cao chân
+contact = +0.18 gắn với PHA    →  vì sao pha bước không thể đóng băng:
+                                 phần thưởng tiếp xúc định nghĩa THEO pha</pre>
+    </div>
+    <p>Số hạng <code>contact</code> là mấu chốt giải thích thất bại khi cố làm robot đứng yên: phần thưởng tiếp xúc được định nghĩa <em>theo pha bước</em>. Đóng băng pha là phá bỏ chính cấu trúc mà policy đã học để giữ thăng bằng.</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Sim-to-real</span>
+    <h3>Domain randomization và ba loại khoảng cách</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Vấn đề.</strong> Mô phỏng không bao giờ giống thực tế. Nếu train trên một mô phỏng <em>duy nhất, cố định</em>, policy sẽ khai thác đúng đặc tính của mô phỏng đó và hỏng ngay khi gặp robot thật.</p>
+      <p><strong>Domain randomization.</strong> Thay vì cố làm mô phỏng <em>chính xác</em>, hãy làm nó <em>đa dạng</em>: mỗi lần khởi tạo lại đổi ma sát, khối lượng, độ trễ, và đẩy robot ngẫu nhiên. Policy buộc phải học chiến lược <strong>đúng với cả một họ động lực học</strong> chứ không riêng một cái. Thực tế nằm đâu đó trong họ đó.</p>
+      <p>Đây là lý do policy chịu được đẩy — nó gặp cú đẩy suốt quá trình train, không phải vì ai lập trình phản xạ chống đẩy.</p>
+      <p><strong>Ba loại khoảng cách.</strong> Cần phân biệt, vì cách chữa khác nhau:</p>
+      <pre>sim-to-sim    cùng policy, hai engine vật lý khác nhau
+              đo được: MuJoCo 0.011 m/s  vs  Isaac 0.026 m/s
+
+sai lệch MODEL cùng engine, model robot khác
+              đo được: 12 khớp 0.026  vs  43 khớp 0.212 m/s
+              → gấp 8 lần, LỚN NHẤT trong ba loại
+
+sim-to-real   cảm biến nhiễu, độ trễ truyền thông, ma sát,
+              rơ động cơ, giới hạn dòng, nóng lên giảm công suất</pre>
+      <p>Điều đáng chú ý: <strong>sai lệch model lớn hơn sai lệch engine 8 lần</strong>. Dùng đúng model robot quan trọng hơn dùng đúng engine vật lý.</p>
+    </div>
+    <div class="meas">
+      <span class="lbl">Domain randomization thật (legged_robot_config.py)</span>
+      <pre>randomize_friction   True    khoảng [0.5, 1.25]
+randomize_base_mass  False   (khoảng [−1, +1] kg, đang TẮT)
+push_robots          True    mỗi 15 s, tối đa 1.0 m/s</pre>
+    </div>
+    <div class="fault">
+      <span class="lbl">Sai lệch model — bài học đắt nhất</span>
+      <pre>lệnh = 0, đo độ trôi:
+  G1 43 khớp (NVIDIA)    0.212 m/s
+  G1 12 khớp (đúng)      0.026 m/s     ← ít hơn 8 lần
+  MuJoCo tham chiếu      0.011 m/s</pre>
+      <p>Policy học chính xác động lực học của <em>model nó được train trên</em>. Không mẹo chỉnh observation nào sửa được — phải nhập đúng URDF 12 khớp.</p>
+      <p>Đã thử hai cách làm robot đứng yên, <strong>cả hai thất bại</strong>: đóng băng pha bước → trôi 0.441 m/s (tệ gấp 2); giữ góc khớp cố định bằng PD → robot sụp. Chuyển động "bước tại chỗ" chính <em>là</em> cơ chế thăng bằng chủ động, không phải phần thừa cần loại bỏ.</p>
+    </div>
+    <p class="file">isaac/control/rl_walk.py · unitree_rl_gym/legged_gym/envs/</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Triển khai</span>
+    <h3>TorchScript và bốn thứ phải khớp chính xác</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Vấn đề TorchScript giải quyết.</strong> Lưu mô hình PyTorch theo cách thường (<code>state_dict</code>) chỉ lưu <em>các con số</em>. Muốn nạp lại phải có đúng file Python định nghĩa mạng — đúng số tầng, đúng kích thước. TorchScript <strong>biên dịch</strong> cả cấu trúc mạng thành dạng trung gian và gói cùng trọng số vào một file.</p>
+      <pre>nạp lại chỉ cần:  torch.jit.load("motion.pt")
+không cần import gì từ repo Unitree</pre>
+      <p><strong>Lợi ích lớn nhất: chạy ngoài Python.</strong> TorchScript nạp được từ C++ qua LibTorch. Đó là lý do repo có thư mục <code>deploy_real/cpp_g1</code> — cùng một file <code>motion.pt</code> chạy trên máy onboard bằng C++, nơi Python quá chậm và không đủ tin cậy về thời gian thực. Một file, ba nơi dùng: train bằng Python → thử MuJoCo bằng Python → chạy thật bằng C++.</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Phải khớp</th><th>Vì sao</th><th>Sai thì</th></tr></thead>
+        <tbody>
+          <tr><td>Thứ tự khớp</td><td>MuJoCo xếp trái-rồi-phải, Isaac xếp xen kẽ</td><td class="was">ngã ngay</td></tr>
+          <tr><td>47 chiều + hệ số scale</td><td>mạng học trên đúng thang đo đó</td><td class="was">ngã ngay</td></tr>
+          <tr><td>Tần số 50 Hz</td><td>LSTM tích lũy theo <em>số lần gọi</em></td><td class="was">ước lượng vận tốc lệch</td></tr>
+          <tr><td>Model robot</td><td>động lực học phải là cái đã train</td><td class="was">trôi gấp 8 lần</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="fx">leg_idx = [names.index(n) for n in POLICY_JOINT_ORDER]
+# đo được trên Isaac: [0, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9, 11]
+# → PHẢI tra theo TÊN, không bao giờ theo chỉ số cố định
+
+omega_body = R.T @ vel[3:6]
+# MuJoCo trả ω hệ THÂN · Isaac trả hệ THẾ GIỚI</div>
+    <p>Điểm về tần số mạnh hơn vẻ ngoài của nó: không chỉ là "policy quen với 20 ms mỗi bước". LSTM tích lũy thông tin theo <em>số lần gọi</em>, nên gọi ở 25 Hz sẽ làm ước lượng vận tốc <strong>sai đúng hai lần</strong> — lỗi ngầm, không crash, chỉ là robot đi sai tốc độ rồi ngã.</p>
+  </section>
+
+  <!-- ============ PHẦN III ============ -->
+  <div class="part"><span>PHẦN III</span><h2>Hạ tầng mô phỏng Isaac Sim</h2></div>
+  <p class="part-note">Đây là một <em>tập hợp hệ con</em>, không phải trình tự — nên không đánh số. Code ở <code>~/study/g1_ws/isaac/</code>.</p>
+
+  <section class="entry">
+    <span class="tag">Kiến trúc</span>
+    <h3>Hai môi trường Python không nói chuyện được với nhau</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Vì sao không import lẫn nhau được.</strong> <code>rclpy</code> không phải Python thuần — nó có phần mở rộng C được biên dịch cho <em>một</em> phiên bản Python cụ thể (<code>_rclpy_pybind11.cpython-312-*.so</code>). Nạp nó vào Python 3.11 là bất khả về mặt ABI, không phải chuyện cấu hình.</p>
+      <p><strong>Giải pháp: gặp nhau ở tầng thấp hơn.</strong> ROS2 giao tiếp qua <strong>DDS</strong> — một giao thức mạng, không phụ thuộc ngôn ngữ. Isaac Sim có thư viện ROS2-<em>C++</em> nội bộ riêng, phát tin nhắn DDS trực tiếp. Hai bên không cần biết nhau ở tầng Python.</p>
+      <pre>Isaac Sim   Python 3.11 (conda)   ─┐
+                                     ├─ DDS
+ROS2 Jazzy  Python 3.12 (hệ thống)  ─┘</pre>
+      <p><strong>OmniGraph.</strong> Vì không dùng <code>rclpy</code>, việc phát topic được cấu hình bằng <em>đồ thị node</em> thay vì viết code publisher. Mỗi node là một khối chức năng có sẵn; ta chỉ tạo node, nối dây, đặt tham số. Hệ quả trong code: nhận <code>/cmd_vel</code> phải <em>chủ động đọc</em> thuộc tính node mỗi vòng lặp, không có callback.</p>
+      <p><strong>Cây TF — ai phát gì.</strong> Đây là quy ước quan trọng nhất khi ghép nhiều hệ:</p>
+      <pre>map     ← SLAM phát        (sửa sai số tích lũy, NHẢY GIẬT)
+odom    ← Isaac phát       (mượt, liên tục, nhưng TRÔI dần)
+pelvis  ← Isaac phát
+lidar   ← Isaac phát       (cố định)</pre>
+      <p>Tách <code>map</code> và <code>odom</code> vì hai frame có tính chất <em>trái ngược</em>: bộ điều khiển cần chuyển động <strong>mượt</strong> (dùng <code>odom</code>, vì vị trí nhảy 2 m đột ngột sẽ làm robot giật loạn), còn planner cần biết <strong>thật sự</strong> đang ở đâu (dùng <code>map</code>).</p>
+    </div>
+    <p class="file">isaac/bridge/ros2_graph.py</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Cảm biến</span>
+    <h3>LiDAR, IMU, camera — ba vai trò khác nhau</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>LiDAR</strong> đo hình học bằng thời gian bay của tia — chính xác về khoảng cách, hoạt động trong tối, nhưng <em>không có màu</em> và thưa dần theo khoảng cách. Chọn OS0 vì FOV dọc ±45°, rộng nhất trong các model có sẵn: humanoid cần <em>vừa</em> thấy sàn ngay trước chân (cho elevation map ở tầng 3) <em>vừa</em> thấy vật cản trên cao.</p>
+      <p><strong>IMU</strong> đo gia tốc và tốc độ góc ở tần số rất cao. Nó <em>không</em> đo vị trí — muốn có vị trí phải tích phân, mà tích phân thì trôi rất nhanh. Vai trò đúng của IMU là cho biết <strong>tư thế tại từng thời điểm</strong> giữa hai lần đo của cảm biến chậm hơn. Đặt cùng vị trí với LiDAR để phép biến đổi giữa hai cảm biến là ma trận đơn vị — bớt một nguồn sai số; trên robot thật hai cái lệch vài cm và phải hiệu chuẩn.</p>
+      <p><strong>Camera</strong> bù chỗ LiDAR yếu: có màu (nhận diện vật thể, biển báo), độ sâu dày đặc ở vùng trước mặt. Nhưng phụ thuộc ánh sáng và kém chính xác về hình học ở xa.</p>
+    </div>
+    <div class="meas">
+      <span class="lbl">Đo thực tế trên OS0-128</span>
+      <pre>điểm mỗi vòng quét   33 500      tần số   10 Hz
+góc dọc              −44.5° … +13.7°
+                     (trên thấp vì phòng không có trần)
+IMU                  432 Hz thực đo (đặt 500)</pre>
+    </div>
+    <div class="fault">
+      <span class="lbl">Chuỗi lỗi cảm biến đã gỡ</span>
+      <p><strong>Double translation.</strong> <code>LidarRtx(translation=[0,0,H])</code> gán offset cho <em>cả</em> prim cha và prim con <code>sensor</code> → cảm biến thật ở độ cao <code>2H</code>. Phát hiện bằng cách đặt hai LiDAR ở hai độ cao khác nhau: tỉ lệ <code>z/H = −2.01</code> ở <em>cả hai</em> → lỗi hệ thống, không phải nhiễu.</p>
+      <p><strong><code>fullScan = False</code></strong> (mặc định) → phát từng mảnh quét ~5k điểm @ 91 Hz thay vì nguyên vòng 33k @ 10 Hz.</p>
+      <p><strong>Camera nằm trong thân.</strong> Đặt ở <code>z = 0.50</code> mà <code>torso_link</code> chiếm <code>z = 0.03…0.53</code> → camera nhìn thấy mặt trong lưới 3D, ảnh RGB là một khối đen. Chuyển lên <code>0.62</code>.</p>
+      <p><strong>Nửa khung hình đen.</strong> Chẩn đoán sai ban đầu là "ảnh bị xoay". Thật ra scene chỉ có một <code>SphereLight</code> chiếu từ một phía.</p>
+      <pre>độ sáng trung bình:  trái 47.0   phải  0.0   ← lệch hẳn
+thêm DomeLight:      trái  168   phải  180   ← cân bằng</pre>
+      <p><strong>Căn chỉnh camera–LiDAR.</strong> Tìm kiếm vét cạn chỉ dùng tiêu chí "% điểm trên mặt sàn" — bốn ma trận khác nhau <em>bằng điểm</em> 77.5%. Thêm tiêu chí hướng nhìn mới ra nghiệm đúng.</p>
+      <pre>khoảng cách lân cận gần nhất:  43.7 cm  →  11.6 cm</pre>
+    </div>
+    <p class="file">isaac/sensors/{lidar,camera,imu}.py</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Tần số &amp; đồng bộ</span>
+    <h3>Bốn đồng hồ trong một vòng lặp</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Vì sao vật lý cần bước nhỏ.</strong> Engine tích phân phương trình chuyển động theo từng bước rời rạc. Bước càng lớn, sai số tích phân càng lớn — và với hệ cứng (lò xo mạnh, tiếp xúc va đập) thì nó không chỉ sai mà <em>mất ổn định</em>. Điều kiện thô: <code>dt</code> phải nhỏ hơn nhiều so với chu kỳ dao động nhanh nhất trong hệ. Với <code>ω_n ≈ 45 rad/s</code> ở cổ chân, <code>dt = 0.002 s</code> là dư an toàn.</p>
+      <p><strong>Vì sao render chậm hơn được.</strong> Dựng hình rất đắt (ray tracing) nhưng cảm biến chỉ cần 10–50 Hz. Nên tách hai nhịp: vật lý 500 Hz, dựng hình mỗi 10 bước. Đây là kỹ thuật chuẩn — mô phỏng chính xác không đòi phải <em>vẽ</em> mọi bước.</p>
+      <p><strong>Vì sao mô hình phân tầng theo tần số lặp lại ở mọi mức.</strong> Nguyên lý <em>tách thang thời gian</em>: vòng phản hồi bên trong phải nhanh hơn hẳn vòng bên ngoài, nếu không hệ dao động rồi mất ổn định. Đây chính là bài học tuần 4, và nó xuất hiện lại ở đây dưới hình thức khác.</p>
+      <pre>vật lý   500 Hz   world.step(render=False)   ← PD đọc q/dq TƯƠI
+render    50 Hz   world.render() mỗi 10 bước   ← cảm biến RTX
+policy    50 Hz   decimation = 10              ← mạng nơ-ron
+IMU      500 Hz   đồ thị on-demand riêng       ← gỡ méo vòng quét</pre>
+      <p>Chi tiết quan trọng: trong 9 bước policy nghỉ, <code>target_leg</code> giữ nguyên — <em>không sao</em>. Nhưng <code>q</code> và <code>dq</code> phải đọc lại <strong>mỗi bước</strong>. Mục tiêu cũ được, phản hồi phải tươi.</p>
+    </div>
+    <div class="fault">
+      <span class="lbl">Ba lần sai tần số, ba triệu chứng khác nhau</span>
+      <p><strong>Mô-men cập nhật quá chậm.</strong> <code>world.step(render=True)</code> tiến một khoảng <code>rendering_dt</code>, nên PD dùng <code>q/dq</code> cũ lặp lại 10 lần → robot ngã. Ở 20 ms, đầu gối vung 5 rad/s đã xoay 5.7° trước khi được sửa; và cú va chạm bàn chân với sàn xảy ra <em>hoàn toàn giữa hai lần</em> PD nhìn tới.</p>
+      <p><strong><code>rendering_dt</code> sai.</strong> Đặt 0.002 nhưng thực tế chỉ dựng hình mỗi 0.02 s → đồng hồ cảm biến RTX chạy chậm 10 lần.</p>
+      <pre>/points:  0.98 Hz  →  9.2 Hz   (sau khi đặt rendering_dt = 0.02)</pre>
+      <p><strong><code>OnPhysicsStep</code> trong đồ thị sai loại.</strong> Isaac ghi lỗi rõ trong log nhưng <em>không nem exception</em>, script chạy bình thường và <code>/imu</code> chỉ… không bao giờ xuất hiện. Node này chỉ hoạt động trong đồ thị <code>ON_DEMAND</code> — phải tách ra đồ thị riêng.</p>
+    </div>
+    <p class="file">isaac/run_g1_sim.py · isaac/bridge/ros2_graph.py</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Drive động cơ</span>
+    <h3><code>acceleration</code> so với <code>force</code>: một phép nhân với quán tính</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Drive là gì.</strong> Mỗi khớp trong engine vật lý đều có sẵn một "động cơ ảo" hoạt động như <em>lò xo cộng giảm chấn</em>: bạn đặt góc mục tiêu, engine tự tính mô-men mỗi bước. Đây là thứ đóng vai <strong>driver động cơ</strong> của robot thật.</p>
+      <p><strong>Hai cách hiểu gain.</strong> Khác biệt nằm ở một phép nhân với quán tính, nhưng hệ quả thì sâu:</p>
+      <pre>force        tau =       kp·(target−q) − kd·q̇      [N·m/rad]
+acceleration tau = I · [kp·(target−q) − kd·q̇]    [1/s²]
+
+viết phương trình chuyển động rồi rút ra:
+  force:        ω_n = √(kp/I)   PHỤ THUỘC quán tính
+  acceleration: ω_n = √kp       KHÔNG phụ thuộc</pre>
+      <p>Với <code>acceleration</code>, quán tính <em>biến mất khỏi phương trình</em> — mọi khớp phản ứng giống nhau dù nặng nhẹ khác nhau. Tiện khi tự viết bộ điều khiển cho robot lạ, và miễn nhiễm với thay đổi quán tính (mang tải, tay vươn ra).</p>
+      <p><strong>Nhưng gain không chuyển được.</strong> <code>kp = 625</code> vô nghĩa với MuJoCo, với robot thật, hay với bài báo khoa học. Và không suy luận được về giới hạn mô-men, vì mô-men thật phụ thuộc <code>I</code> mà <code>I</code> <em>thay đổi theo tư thế</em>. Với policy RL đã train sẵn thì bắt buộc phải dùng <code>force</code> — policy học trên công thức không có phép nhân quán tính.</p>
+      <p><strong>PD nằm ở đâu — so với robot thật.</strong></p>
+      <pre>robot thật       Python 50 Hz gửi (q, kp, kd)
+                 → firmware driver tính PD 1–4 kHz
+--drive position Python 50 Hz gửi (q, kp, kd)
+                 → PhysX tính PD 500 Hz trong bước vật lý
+--drive torque   Python 500 Hz tự tính tau
+                 → PhysX chỉ nhận mô-men</pre>
+      <p>Cùng một công thức, khác chỗ chạy. Trên robot thật, việc chia 50 Hz / cao tần là chia giữa <em>hai máy tính</em>; trong mô phỏng, Python phải gánh cả hai vai trong một vòng lặp — đó là ý nghĩa của <code>decimation = 10</code>.</p>
+    </div>
+    <div class="fault">
+      <span class="lbl">Ba lỗi cùng lúc — nguyên nhân robot sụp lần đầu</span>
+      <pre>              trước (URDF importer)   sau (đã sửa)
+type          acceleration            force
+stiffness     625.0 mọi khớp          kp / 57.3
+damping       0.0  → ζ = 0            kd / 57.3
+
+get_gains() = 35 809.86 = 625 × 57.29578   ← lệch ĐÚNG 180/π</pre>
+      <p>Thuộc tính USD tính theo <strong>độ</strong>, API <code>set_gains</code> tính theo <strong>radian</strong>. Đặt <code>kp = 150</code> trong khi nền là 35 809 → yếu hơn 238 lần → robot sụp từ 0.80 m xuống 0.06 m. Cộng thêm <code>ζ = 0</code> (dao động không bao giờ tắt) thì không có cơ hội nào.</p>
+    </div>
+    <div class="meas">
+      <span class="lbl">Sau khi sửa · lệnh 0.5 m/s, 30 giây</span>
+      <pre>                quãng đường   tốc độ thực   lệch ngang
+--drive position   13.78 m      0.459 m/s      1.45 m
+--drive torque     13.32 m      0.444 m/s      2.68 m</pre>
+    </div>
+    <p>Chế độ <code>position</code> bám lệnh sát hơn và đi thẳng hơn gấp đôi, vì PhysX tính PD <em>bên trong</em> bước tích phân nên đồng bộ chính xác với trạng thái tức thời. Nó cũng bị chặn bởi <code>maxForce</code> lấy từ URDF (88/139/50 N·m — giới hạn động cơ thật), trong khi <code>set_joint_efforts</code> thì không — tức chế độ <code>torque</code> hơi "ăn gian" về công suất.</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Hiệu năng</span>
+    <h3>CPU: bớt thread thì chạy nhanh hơn</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Oversubscription.</strong> Song song hóa chỉ có lãi khi khối lượng công việc đủ lớn để chia. Mỗi thread có chi phí cố định: đồng bộ, hàng rào (barrier), chuyển ngữ cảnh, tranh chấp cache. Khi công việc quá nhỏ, chi phí đó <strong>vượt lợi ích</strong> — thêm thread làm chậm đi.</p>
+      <p>Isaac Sim mặc định tạo 20 thread tasking + 20 TBB (bằng số lõi). Robot chỉ có <em>một</em> articulation, 12 khớp — quá nhỏ để chia cho 40 thread.</p>
+      <p><strong>Vì sao chuyển sang GPU không giúp.</strong> GPU giữ nguyên ~52% ở <em>mọi</em> cấu hình thread → GPU đang <strong>chờ CPU</strong>, không phải điểm nghẽn. Và physics trên GPU được thiết kế cho <em>hàng nghìn</em> robot song song (huấn luyện RL); với một robot, mỗi lần đọc trạng thái thành một lần đồng bộ GPU→CPU — mà chế độ <code>torque</code> đọc 500 lần/giây.</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>threadCount</th><th>CPU</th><th>GPU</th><th>Tốc độ mô phỏng</th></tr></thead>
+        <tbody>
+          <tr><td class="num">20 <span style="color:var(--steel)">(mặc định)</span></td><td class="num was">503%</td><td class="num">52%</td><td class="num was">0.78×</td></tr>
+          <tr><td class="num">8</td><td class="num">265%</td><td class="num">55%</td><td class="num">0.80×</td></tr>
+          <tr><td class="num"><strong>6</strong></td><td class="num now">222%</td><td class="num">54%</td><td class="num now">1.00×</td></tr>
+          <tr><td class="num">4</td><td class="num">180%</td><td class="num">51%</td><td class="num">0.98×</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Giảm 20 → 6: CPU giảm 56% <em>và</em> mô phỏng nhanh hơn 28%. Thử bật GPU physics thì crash: <code>Incompatible device of velocity tensor</code> — backend đang là <code>numpy</code> (CPU), muốn dùng phải viết lại sang <code>backend="torch"</code> với tensor CUDA.</p>
+    <p class="file">run_sim.sh (đã đặt mặc định 6) · isaac/tests/bench_threads.sh</p>
+  </section>
+  <!-- ============ PHẦN IV ============ -->
+  <div class="part"><span>PHẦN IV</span><h2>SLAM &amp; định vị</h2></div>
+  <p class="part-note">Tầng 0 của lộ trình 5 tầng. Code ở <code>~/study/g1_ws/src/g1_perception/</code>.</p>
+
+  <section class="entry">
+    <span class="tag">Nền tảng</span>
+    <h3>Bài toán con gà và quả trứng</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>SLAM</strong> = Simultaneous Localization And Mapping — định vị và dựng bản đồ <em>đồng thời</em>. Nghe đơn giản nhưng đây là nghịch lý:</p>
+      <pre>muốn biết mình ở ĐÂU   →  cần BẢN ĐỒ để so chiếu
+muốn dựng BẢN ĐỒ       →  cần biết mình ở ĐÂU khi đo</pre>
+      <p>Có sẵn một trong hai thì bài toán dễ. Có bản đồ, cần định vị → dùng AMCL (bài toán <em>localization</em>). Biết chính xác vị trí, cần bản đồ → chỉ việc ghép các lần quét. SLAM là khi <strong>không có cả hai</strong>.</p>
+      <p><strong>Vì sao odometry một mình không đủ.</strong> Robot có odometry (encoder bánh xe với AGV, động học chân + IMU với G1). Sao không dùng nó rồi ghép bản đồ? Vì odometry <strong>trôi tích lũy</strong>:</p>
+      <pre>đi  10 m  →  lệch 10 cm      chấp nhận được
+đi 100 m  →  lệch 1–2 m      bản đồ bắt đầu méo
+đi vòng về chỗ cũ  →  odometry nói đang cách đó 3 m
+                      → bản đồ có HAI bản sao cùng một phòng</pre>
+      <p>Điểm cốt lõi: sai số odometry <strong>không bao giờ tự sửa</strong> — nó chỉ tăng. Đó là toàn bộ lý do SLAM tồn tại.</p>
+      <p><strong>Ba việc SLAM phải làm.</strong></p>
+      <pre>1. scan matching       so hai lần quét liên tiếp → dịch chuyển
+                       chính xác hơn odometry, nhưng CŨNG trôi
+2. loop closure        nhận ra "chỗ này đã đi qua"
+                       ← bước DUY NHẤT xóa được sai số tích lũy
+3. pose graph optim.   N tư thế, mỗi cặp một ràng buộc
+                       tìm bộ N tư thế thỏa mãn tốt nhất</pre>
+      <p>Bước 3 chính là <strong>tối ưu có ràng buộc</strong> — cùng tư tưởng với QP ở tuần 9, chỉ quy mô lớn hơn nhiều.</p>
+      <p><strong>Pose graph so với bộ lọc.</strong> Cách cũ (EKF-SLAM) duy trì <em>một</em> ước lượng và cập nhật tuần tự — quá khứ đã "cứng lại", không sửa được. Pose graph giữ <em>toàn bộ</em> lịch sử tư thế và tối ưu lại tất cả cùng lúc, nên khi phát hiện vòng kín nó <strong>rải sai số ngược lại</strong> lên cả đường đi đã qua. Đó là lý do gần như mọi SLAM hiện đại đều dùng pose graph.</p>
+    </div>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Cây TF</span>
+    <h3>Vì sao tách <code>map</code> và <code>odom</code></h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p>Đây là phần dễ nhầm nhất, và bạn đã dựng được ba tầng dưới:</p>
+      <pre>map     ←── SLAM phát   (sửa sai số, NHẢY GIẬT khi loop closure)
+  │
+odom    ←── robot phát  (mượt, liên tục, nhưng TRÔI dần)
+  │
+pelvis  ←── robot phát
+  │
+lidar   ←── robot phát</pre>
+      <p><strong>Vì sao không gộp?</strong> Vì hai frame có tính chất <em>trái ngược</em>:</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th></th><th>odom → pelvis</th><th>map → odom</th></tr></thead>
+          <tbody>
+            <tr><td>Tính chất</td><td>mượt, liên tục</td><td class="was">nhảy giật khi loop closure</td></tr>
+            <tr><td>Độ chính xác</td><td class="was">trôi dần</td><td class="now">đúng về lâu dài</td></tr>
+            <tr><td>Dùng cho</td><td>điều khiển</td><td>lập kế hoạch</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Bộ điều khiển đi bộ cần chuyển động <strong>mượt</strong> — nếu vị trí nhảy 2 m đột ngột thì robot giật loạn rồi ngã. Nên nó dùng <code>odom</code>. Còn planner cần biết <strong>thật sự</strong> đang ở đâu trong bản đồ nên dùng <code>map</code>. Một frame không thể vừa mượt vừa đúng — nên phải có hai.</p>
+    </div>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Riêng với robot chân</span>
+    <h3>Hai thứ khác hẳn AGV</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Thứ nhất: méo trong vòng quét.</strong> LiDAR quay hết một vòng mất 100 ms. Robot đi bộ nhún và lắc trong 100 ms đó, nên điểm <em>đầu</em> vòng và điểm <em>cuối</em> vòng được đo ở <strong>hai tư thế khác nhau</strong>. Ghép chúng như cùng một tư thế → vòng quét bị <em>xé lệch</em>. Tiếng Anh: intra-scan motion distortion.</p>
+      <pre>đo được — độ tán mặt sàn:
+  chế độ trượt (thân không lắc)   41.9 mm
+  chế độ đi bộ                    58.5 mm    ← tăng 40%
+  (cả hai đều có odometry HOÀN HẢO)</pre>
+      <p>Cách chữa: <strong>gỡ méo (de-skew)</strong>. IMU chạy 200–1000 Hz cho biết tư thế tại <em>từng thời điểm</em> trong vòng quét, rồi tính lại vị trí từng điểm về một tư thế tham chiếu chung. Đây là chữ "I" trong <strong>LIO</strong> (LiDAR-Inertial Odometry) và là lý do FAST-LIO tồn tại.</p>
+      <p><strong>Thứ hai: odometry chân kém hơn odometry bánh xe.</strong> Bánh xe lăn liên tục nên đo được ổn định. Chân thì có pha nhấc lên (không tiếp xúc), có va đập khi đặt, và có trượt. Sai số trôi nhanh hơn nhiều.</p>
+      <p><strong>Thứ ba, cái làm hỏng bản đồ ở đây:</strong> SLAM 2D <em>giả định cảm biến nằm ngang</em>. Giả định đó đúng với AGV (thân luôn song song mặt sàn) nhưng <strong>bị robot chân phá vỡ</strong> — và đó chính là nút thắt lớn nhất của chặng A.</p>
+    </div>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Chặng A · hoàn thành</span>
+    <h3>SLAM 2D và frame ổn định theo trọng lực</h3>
+    <div class="fx">/points  →  pointcloud_to_laserscan  →  /scan  →  slam_toolbox  →  /map</div>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Vì sao ép 3D xuống 2D.</strong> Không phải để né 3D, mà vì ba lý do thực dụng: kiểm chứng cả đường ống (TF, đồng bộ thời gian, hệ tọa độ) với chi phí thấp — lỗi tìm ra ở đây <em>rẻ</em> hơn nhiều so với khi đã có FAST-LIO chen vào; Nav2 ở tầng 4 <strong>thực sự cần</strong> costmap 2D nên bước này không bị bỏ đi; và thấy được loop closure hoạt động bằng mắt.</p>
+      <p><strong>Cách ép.</strong> Lấy một <em>dải chiều cao</em> trong frame đích, bỏ mọi điểm ngoài dải, rồi chiếu phần còn lại xuống mặt phẳng. Chọn dải là chỗ quyết định: quá thấp thì bắt mặt sàn, quá cao thì bỏ mất vật cản thấp.</p>
+    </div>
+    <div class="fault">
+      <span class="lbl">Nút thắt lớn nhất của cả chặng</span>
+      <p><code>pelvis</code> <strong>nghiêng khi đi bộ</strong>, nên "dải chiều cao ngang" lắc theo và ở tầm xa nó <em>cắt xuống mặt sàn</em>. Mặt sàn thành một vành tròn trong bản đồ — mà vành tròn thì <strong>đối xứng xoay hoàn hảo</strong>, nên scan matching mất hết thông tin góc quay.</p>
+      <pre>hình học: sàn ở −0.777 m so với pelvis, dải bắt đầu từ −0.55
+          cần nghiêng bao nhiêu để sàn "lọt" vào dải ở khoảng r?
+              r · sin(θ) > 0.227
+          r = 6 m  →  θ > 2.17°
+          r = 4 m  →  θ > 3.25°
+
+đo được: độ nghiêng pelvis lớn nhất   4.43°   ← ĐÃ VƯỢT
+hậu quả: 7 khối vật cản bị vẽ thành ~20 bản sao</pre>
+      <p>Sửa bằng frame <code>pelvis_stab</code> — cùng vị trí với <code>pelvis</code> nhưng <strong>bỏ roll/pitch, giữ yaw</strong>. Dải chiều cao trong frame này luôn <em>thực sự</em> nằm ngang. Trên robot thật, roll/pitch này đến từ bộ lọc IMU (state estimator).</p>
+    </div>
+    <div class="meas">
+      <span class="lbl">Trước và sau khi sửa</span>
+      <pre>TF map→odom      9.3 m / −96°   →   0.19 m / 1.7°
+vật cản          ~20 bản sao     →   đúng hình dạng
+vành nhiễu sàn   có              →   không còn</pre>
+    </div>
+    <p>Trong Isaac Sim, <code>/odom</code> là ground truth không trôi, nên <code>map→odom</code> lẽ ra phải gần 0 — đó là cách biết SLAM đúng hay sai mà trên robot thật không có được.</p>
+    <div class="fault">
+      <span class="lbl">Hai lỗi im lặng xếp tầng</span>
+      <p><code>slam_toolbox</code> là <strong>LifecycleNode</strong> — không tự chạy. Tiến trình lên bình thường, in một dòng rồi <em>nằm im</em> ở trạng thái <code>unconfigured</code>: không subscribe, không phát <code>/map</code>, không báo lỗi. Phải phát event <code>CONFIGURE</code> rồi <code>ACTIVATE</code>.</p>
+      <p><code>pointcloud_to_laserscan</code> là <strong>lazy publisher</strong> — chỉ subscribe <code>/points</code> khi <em>có người</em> subscribe <code>/scan</code>.</p>
+      <p>Hai cái ghép lại thành chuỗi im lặng hoàn toàn: SLAM không subscribe → converter không làm gì → <code>/scan</code> trống → rất dễ kết luận sai là "LiDAR hỏng". Bài học: khi một topic trống, kiểm tra <strong>cả hai đầu</strong> bằng <code>ros2 topic info -v</code>.</p>
+    </div>
+    <p class="file">src/g1_perception/{launch/slam_2d.launch.py, scripts/stabilize_frame.py}</p>
+  </section>
+
+  <section class="entry">
+    <span class="tag">Chặng B · dừng có chủ đích</span>
+    <h3>FAST-LIO là Odometry, không phải SLAM</h3>
+    <div class="theory">
+      <span class="lbl">Lý thuyết</span>
+      <p><strong>Tên gói gây hiểu lầm.</strong> FAST-LIO là LiDAR-Inertial <em>Odometry</em>. Nó làm hai việc: gỡ méo vòng quét bằng IMU, và ghép các vòng quét liên tiếp để ước lượng chuyển động. Nó <strong>không có loop closure</strong>, không có pose graph.</p>
+      <pre>FAST-LIO      scan matching + de-skew           → TRÔI đều
+slam_toolbox  scan matching + loop closure
+              + pose graph                      → SỬA được sai số</pre>
+      <p>Nên trôi đều theo thời gian là <strong>hành vi đúng</strong>, không phải bug. Nó thiếu đúng cái khiến SLAM khác odometry — quay lại chính bài học ở đầu phần này: sai số odometry không bao giờ tự sửa.</p>
+      <p><strong>Cái đáng lo thật</strong> không phải phần trôi đều mà là <em>bước nhảy đột ngột</em> 356 → 886 cm trong 12 giây — đó là dấu hiệu scan matching mất theo dõi tạm thời, một lỗi thật.</p>
+    </div>
+    <div class="meas">
+      <span class="lbl">Sai số theo thời gian, robot đứng yên</span>
+      <pre>t =  12 s     22 cm
+t =  36 s    312 cm
+t =  84 s    886 cm      ← nhảy đột ngột (mất theo dõi)
+t = 220 s   1023 cm      ← sau đó tăng đều ~1.1 cm/s (trôi bình thường)</pre>
+    </div>
+    <div class="fault">
+      <span class="lbl">Ba chỗ phải vá để build và chạy</span>
+      <p><strong><code>pcl_ros</code></strong> là phụ thuộc thừa — kiểm tra mã nguồn thì chỉ dùng <code>pcl_conversions</code>. Máy này không cài <code>pcl_ros</code>.</p>
+      <p><strong><code>tf2_ros</code></strong> bị thiếu trong <code>package.xml</code> dù code có <code>#include &lt;tf2_ros/transform_broadcaster.h&gt;</code>.</p>
+      <p><strong>Dòng ghi đè dấu thời gian.</strong> Đây là chỗ nghiêm trọng nhất:</p>
+      <pre>msg->header.stamp = rclcpp::Clock().now();   // ← BẢN GỐC
+
+rclcpp::Clock() mặc định là RCL_SYSTEM_TIME, KHÔNG theo use_sim_time
+  → dấu thời gian LiDAR = 1.785e9  (epoch Unix)
+  → dấu thời gian IMU   = ~700     (sim time)
+rồi trong sync_packages():
+  if (last_timestamp_imu < lidar_end_time) return false;   // LUÔN đúng
+  → không bao giờ ghép được gói → FAST-LIO im lặng hoàn toàn</pre>
+      <p><code>/Odometry</code> được quảng cáo nhưng không phát, không có TF <code>body</code>, không một cảnh báo nào.</p>
+    </div>
+    <div class="fault">
+      <span class="lbl">Khởi tạo IMU giả định robot đứng yên</span>
+      <pre>MAX_INI_COUNT = 10 mẫu  →  ở 500 Hz là 0.02 GIÂY
+chu kỳ bước của G1      =  0.8 giây
+
+IMU_init làm hai việc trên trung bình 0.02 s đó:
+  init_state.grav = −mean_acc/|mean_acc| · g    hướng trọng lực
+  init_state.bg   = mean_gyr                    BIAS con quay</pre>
+      <p>Robot lúc đó đang đi và <strong>đang xoay 0.15 rad/s</strong> → tốc độ xoay đó bị ghi thành <em>bias vĩnh viễn</em> của con quay. Và <code>|acc|</code> đo được lúc đi bộ lên tới 14.5 m/s² (thật là 9.81) → cả hướng và độ lớn trọng lực đều sai → độ cao ước lượng trôi lên.</p>
+      <p>Đã nâng lên 2000 mẫu (4 giây ≈ 5 chu kỳ bước) và thêm <code>--start-delay</code>, nhưng RL policy <em>không bao giờ</em> đứng hoàn toàn nên giả định gốc vẫn không thỏa.</p>
+    </div>
+    <p><strong>Quyết định:</strong> dừng chặng B, dùng chặng A. <code>slam_toolbox</code> đã có loop closure — thứ FAST-LIO thiếu.</p>
+    <p class="file">src/fast_lio/ (bản copy đã vá) · src/g1_perception/scripts/lio_eval.py</p>
+  </section>
+
+  <!-- ============ ĐÚC KẾT ============ -->
+  <div class="part"><span>ĐÚC KẾT</span><h2>Sáu bài học lặp lại</h2></div>
+  <p class="part-note">Phần giá trị nhất cho phỏng vấn: không phải kiến thức sách vở mà là cách làm việc, mỗi cái xuất hiện ở nhiều tầng khác nhau của dự án.</p>
+
+  <div class="lesson">
+    <h3><b>01</b>Khi số đo trái với quan sát, nghi phép đo trước</h3>
+    <p>Đây là bài học xuất hiện nhiều lần nhất, và mỗi lần đều mất thời gian vì tin số đo.</p>
+    <div class="cases">camera v1  đo 0.1% điểm đúng sàn → kết luận "dữ liệu 3D hỏng"
+           tái hiện trung thực cho 13.4% → quan sát ban đầu của bạn đúng
+probe_lstm biên độ hành động 14.3 (= 205° một khớp) → phi vật lý
+           thật ra bài test giữ "thân thẳng đứng" trong khi chân vung
+CPU 404%   đo lúc sim còn đang biên dịch shader, chưa vào vòng lặp
+           vào vòng lặp rồi mới đúng 222%</div>
+  </div>
+
+  <div class="lesson">
+    <h3><b>02</b>Lỗi im lặng là loại đắt nhất</h3>
+    <p>Không exception, không traceback, chỉ là "topic không xuất hiện" hoặc "robot ngã". Phải chủ động đọc log và <em>đọc ngược trạng thái từ engine</em> thay vì tin là cấu hình đã được đặt.</p>
+    <div class="cases">OmniGraph        3 lần: chassisPrim sai · frame_id lệch hoa/thường
+                 · OnPhysicsStep trong đồ thị sai loại
+LifecycleNode    nằm im ở unconfigured, không báo gì
+lazy publisher   không ai subscribe thì không làm gì
+USD sau reset    sửa thuộc tính không còn tác dụng, không cảnh báo</div>
+    <p>Đối sách đã đưa vào code: sau khi cấu hình, gọi <code>get_gains()</code> rồi in ra để so với giá trị mong đợi.</p>
+  </div>
+
+  <div class="lesson">
+    <h3><b>03</b>Sai đơn vị và sai quy ước không bao giờ báo lỗi</h3>
+    <div class="cases">quaternion    (w,x,y,z) MuJoCo  vs  (x,y,z,w) ROS/Isaac
+góc           USD theo ĐỘ  vs  set_gains theo RADIAN   → lệch 57.3×
+thời gian     FAST-LIO ouster64 nano giây  vs  ta phát giây → 10⁹×
+đồng hồ       sim time ~700  vs  wall clock 1.785e9    → 1.78 tỉ
+hệ quy chiếu  MuJoCo trả ω hệ THÂN  vs  Isaac hệ THẾ GIỚI</div>
+    <p>Cả năm trường hợp đều cho code chạy bình thường và kết quả sai. Cách phòng duy nhất là kiểm tra chéo bằng một phép đo độc lập.</p>
+  </div>
+
+  <div class="lesson">
+    <h3><b>04</b>Windup xuất hiện ở mọi tầng, không chỉ trong PID</h3>
+    <p>Bất cứ chỗ nào có <em>biến tích lũy</em> mà không có giới hạn, windup sẽ xuất hiện — dù bạn không gọi nó là "integrator".</p>
+    <div class="cases">PID cơ bản     tích phân sai số không kẹp
+IK             q_des tích lũy → mục tiêu khuỷu tay 17 rad
+null-space     dồn "vận tốc" vào accumulator → kẹp trần nửa chu kỳ
+                                              sai số 140 mm → 5 mm</div>
+  </div>
+
+  <div class="lesson">
+    <h3><b>05</b>Tách thang thời gian: vòng trong phải nhanh hơn vòng ngoài</h3>
+    <div class="cases">tuần 4   mục tiêu 10 rad/s → khớp cần 25 rad/s → robot đổ
+         sửa: MAX_STEP 0.003 (≈ 1.5 rad/s)
+Isaac    policy 50 Hz  ·  PD 500 Hz
+         mục tiêu cũ được, nhưng PHẢN HỒI phải tươi
+         PD ở 50 Hz với q/dq cũ 10 lần → ngã
+robot thật  policy 50 Hz (Python)  ·  PD 1–4 kHz (firmware driver)</div>
+    <p>Kiến trúc phân tầng theo tần số này giống nhau ở mọi mức, từ một khớp đơn lẻ đến toàn hệ thống.</p>
+  </div>
+
+  <div class="lesson">
+    <h3><b>06</b>Trước khi tin một tiêu chí tối ưu, kiểm tra xem có nghiệm bằng điểm</h3>
+    <p>Tìm kiếm vét cạn góc xoay camera dùng đúng một tiêu chí: "% điểm nằm trên mặt sàn". <strong>Bốn</strong> ma trận xoay khác nhau đều cho 77.5% — tiêu chí không phân biệt được chúng, và nó chọn bừa một cái sai (camera quét sang <em>bên trái</em> thay vì phía trước).</p>
+    <p>Bạn phát hiện ra bằng mắt. Thêm tiêu chí thứ hai (hướng nhìn phải về phía trước) mới ra nghiệm đúng — cùng bản chất với <code>W_REG</code> trong QP tuần 9 và <code>λ²I</code> ở tuần 4: khi bài toán vô định, cần thêm tiêu chí để chọn.</p>
+  </div>
+
+  <!-- ============ TIẾP THEO ============ -->
+  <div class="part"><span>TIẾP THEO</span><h2>Lộ trình 5 tầng · trạng thái hiện tại</h2></div>
+
+  <ul class="stack">
+    <li class="done">
+      <span class="lv">Tầng 0 ✓</span>
+      <div><b>SLAM</b><span class="d">Chặng A dùng được: <code>map→odom</code> lệch 0.19 m. Chặng B dừng (thiếu loop closure).</span></div>
+    </li>
+    <li>
+      <span class="lv">Tầng 4</span>
+      <div><b>Hoạch định toàn cục — Nav2</b><span class="d">Dùng <code>/map</code> để robot tự đi tới đích, thay cho teleop tay. Việc gần nhất có thể làm ngay, vì đầu vào đã sẵn.</span></div>
+    </li>
+    <li>
+      <span class="lv">Tầng 3</span>
+      <div><b>Elevation map · đánh giá địa hình</b><span class="d">Từ đám mây 3D dựng bản đồ độ cao, phân loại chỗ đi được và không đi được.</span></div>
+    </li>
+    <li>
+      <span class="lv">Tầng 2</span>
+      <div><b>Hoạch định bước chân</b><span class="d">Bắt buộc dùng <code>--gait rl</code> (chân thật, lực tiếp xúc thật). <code>slide</code> và <code>walk</code> không dùng được ở tầng này.</span></div>
+    </li>
+    <li>
+      <span class="lv">Tầng 1</span>
+      <div><b>Leo cầu thang</b><span class="d">Perception và locomotion ràng buộc chặt với nhau. Cần thêm địa hình cao thấp vào <code>scene/world.py</code>.</span></div>
+    </li>
+  </ul>
+
+  <p class="part-note" style="margin-top:26px">Việc nhỏ còn treo: bổ sung các lỗi mới sửa vào <code>INTERVIEW_QUESTIONS.md</code> — mục 5.8 (RL) vẫn là stub TODO, mục 6 chưa có phần drive <code>acceleration/force</code>, <code>threadCount</code>, và LSTM; và chưa có mục nào về SLAM.</p>
+
+  <footer class="foot">
+    <p><strong>Cách chạy nhanh</strong></p>
+    <div class="fx">./run_sim.sh --gait rl --scene room --no-camera --teleop   # T1
+./run_slam.sh                                             # T2
+./run_rviz_slam.sh                                        # T3
+./run_teleop.sh                                           # T4 — i tiến, k dừng
+
+SIM_THREADS=4 ./run_sim.sh ...        # CPU thấp hơn nữa
+./run_sim.sh --drive position ...     # PD trong PhysX, giống robot thật</div>
+    <p>Mọi số liệu trong sổ tay này đo trực tiếp từ code trong <code>~/study/</code> và <code>~/study/g1_ws/</code>, không lấy từ ký ức.</p>
+  </footer>
+
+</div>
