@@ -1,0 +1,28 @@
+leg_odometry_node:
+  ros__parameters:
+    # Duong dan URDF 29 dof. Sua cho dung may cua ban, hoac dat qua launch.
+    urdf_path: ""
+    network_interface: ""        # vd "eth0" / "wlp2s0"; de trong = mac dinh cua SDK
+    enable_sdk: true             # false = khong doc robot, chi kiem tra duong ong ROS
+    lowstate_topic: "rt/lowstate"
+    output_topic: "/leg_odom"
+    contact_topic: "/leg_contact"
+    base_frame: "pelvis"
+    odom_frame: "odom"
+
+    # Do lech chuan van toc dua vao covariance cua Odometry.
+    # Do trong MuJoCo voi nhieu cam bien thuc te: RMS ~14 mm/s.
+    # De 20 mm/s cho co bien, siet lai sau khi co so do tren robot that.
+    vel_std: 0.02
+
+    # Nguong phat hien tiep xuc (co tre de khong nhay trang thai).
+    # Dung o che do tua tinh. Khi DI BO phai xem lai - uoc luong luc bo qua
+    # so hang quan tinh M*qddot.
+    contact_on: 60.0
+    contact_off: 30.0
+
+    # Cach hop nhat hai chan: "mean" (trung binh cong) hoac "force" (trong so
+    # theo luc phap tuyen). Xem ghi chu trong leg_odometry.py - "force" la GIA
+    # THUYET tu du lieu robot that, chua chung minh; trong mo phong "mean" tot hon.
+    # Buoi do sau: chay ca hai roi so bang van toc TUNG CHAN trong CSV.
+    fusion: "force"

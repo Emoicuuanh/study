@@ -1,0 +1,44 @@
+wbc_shadow_node:
+  ros__parameters:
+    network_interface: "wlp0s20f3"
+    lowstate_topic: "rt/lowstate"
+    rate_divider: 2          # 1052 Hz / 2 ~ 500 Hz
+    settle_secs: 1.0
+
+    # --- LOC: giu he so goc, chi loc dau vao ---
+    # Do tren robot that + mo phong (2026-09-18):
+    #   A goc khong loc            : nguong day 62-70 N | rung 1.289 Nm
+    #   B goc + loc v10/dq10       : nguong day 62-70 N | rung 0.568 Nm  <- chon
+    #   C ha he so (8/20) + loc    : nguong day 55-62 N | rung 0.304 Nm
+    # Loc 10 Hz KHONG lam giam kha nang chong day (dao dong thang bang chi
+    # 1.6 Hz nen tre pha khong dang ke) nhung cat rung 2.3 lan. Mien phi.
+    # Loc 5 Hz TE HON 10 Hz (0.414 vs 0.304 Nm) - tre pha nhieu qua tu sinh dao dong.
+    vel_filter_hz: 10.0
+    dq_filter_hz: 10.0
+
+    # --- he so ---
+    # Nguon rung KHONG phai tac vu tu the: quet tat tung so hang cho thay
+    # kd_q=0 khong doi gi (1.277 vs 1.257), kd_com=0 giam con 0.467.
+    # Tuc la nhieu van toc than (6 mm/s) nhan kd_com roi qua canh tay don tiep xuc.
+    # Muon giam nua ma khong ha he so thi phai cai thien UOC LUONG VAN TOC
+    # (hop nhat IMU bang IEKF), chu khong phai detune them.
+    kp_com: 60.0
+    kd_com: 15.0
+    kp_ori: 250.0
+    kd_ang: 40.0
+    kp_q: 100.0
+    kd_q: 20.0
+
+    # --- phat mo-men khop ---
+    # Dung HAI CHAN la bai toan vo dinh tinh hoc: nhieu cach phan bo luc cho
+    # cung mot hop luc nhung mo-men khop khac han. Tach tren du lieu that cho
+    # thay mo-men hong 27.6 Nm thi 28.8 den tu -Jc^T f (chi 5.5 tu M*qacc,
+    # 3.1 tu trong luc) - tuc QP dang chon cach phan bo doi mo-men hong lon.
+    #
+    # Danh doi do duoc (MuJoCo: nguong day | robot that: hip_p TB / tong 12 khop):
+    #   w_tau=0  -> 65 N | 26.6 / 160.7 Nm     (Unitree: 2.0 / 53.3)
+    #   w_tau=1  -> 62 N | 17.5 / 134.1        <- chon
+    #   w_tau=10 -> 58 N | 12.7 / 113.1
+    # CoM lech max KHONG doi (72.3 mm) o moi gia tri - chi la chon diem khac
+    # trong khong gian null, khong lam hong tac vu thang bang.
+    w_tau: 1.0

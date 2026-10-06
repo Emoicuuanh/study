@@ -3,7 +3,10 @@ g1_state_estimator:
     # Sensor Topics
     imu_topic: "/dog_imu_raw"
     lio_topic: "/Odometry"
-    leg_topic: "/dog_odom"
+    # /dog_odom do SDK high-level sinh ra -> se chet khi chuyen sang WBC low-level.
+    # /leg_odom do g1_leg_odometry tu tinh tu encoder + gyro, khong phu thuoc
+    # bo dieu khien cua hang. Xem WBC_G1_PROGRESS.md muc 8.
+    leg_topic: "/leg_odom"
 
     # Coordinate Frames
     map_frame: "map"
@@ -23,7 +26,12 @@ g1_state_estimator:
     # [x, y, z] noise variance
     lio_pos_noise: [0.001, 0.001, 0.1] # Set Z noise to 0.1 to ignore LIO Z-drift
     lio_ori_noise: [0.001, 0.001, 0.001]
-    leg_vel_noise: [0.01, 0.01, 0.01]
+    # DO TREN ROBOT THAT (2026-09-18, 2 lan doc lap): nhieu van toc chan
+    # 5.94 / 4.57 / 0.72 mm/s (lan 2) va 6.11 / 4.59 / 0.79 mm/s (lan 1).
+    # Lay 9 mm/s cho co bien -> phuong sai 8.1e-5.
+    # Gia tri cu 0.01 tuong ung do lech chuan 100 mm/s: long hon thuc te ~280 lan
+    # theo phuong sai, tuc IEKF gan nhu bo qua thong tin tu chan.
+    leg_vel_noise: [8.1e-05, 8.1e-05, 8.1e-05]
 
     # Rollback History duration
     history_length_sec: 2.0

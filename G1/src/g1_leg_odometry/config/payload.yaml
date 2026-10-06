@@ -1,0 +1,67 @@
+# Khoi luong GAN THEM khong co trong g1_29dof.urdf goc cua Unitree.
+#
+# Khong sua URDF goc: giu no nguyen ban de con cap nhat duoc tu nha san xuat.
+# File nay duoc ap len mo hinh Pinocchio luc nap (payload.py).
+#
+# KIEM CHUNG: tong khoi luong mo hinh sau khi ap phai xap xi 38.6 kg - do la
+# tong luc phap tuyen do duoc khi robot dung yen tren robot that (2026-09-18).
+# Phep do do DOC LAP voi mo hinh than tren: mo-men khop chan chi "nhin thay"
+# cac khau BEN DUOI khop, con khoi luong than tren truyen thang qua than noi
+# xuong dat nen hien nguyen ven trong wrench tiep xuc.
+#
+# LUU Y: khoi luong o day KHONG anh huong leg odometry (van toc khong dung
+# khoi luong; uoc luong luc chi dung trong luc cac khau CHAN). No danh cho
+# WBC: bu trong luc, dong luc hoc centroidal, vi tri CoM.
+
+payload:
+  # --- Tay Inspire RH56DFTP thay cho tay cao su mac dinh ---
+  # URDF da co left/right_rubber_hand = 0.170 kg -> chi cong PHAN CHENH.
+  # Nguon: RH56DFTP user manual, 790 +- 10 g moi ban.
+  - name: inspire_hand_left_delta
+    frame: left_rubber_hand
+    mass: 0.620              # 0.790 - 0.170
+    xyz: [0.0, 0.0, 0.0]     # coi nhu cung trong tam voi tay cao su
+    source: datasheet
+
+  - name: inspire_hand_right_delta
+    frame: right_rubber_hand
+    mass: 0.620
+    xyz: [0.0, 0.0, 0.0]
+    source: datasheet
+
+  # --- Lidar Livox Mid360 tren dau ---
+  # mid360_link DA CO trong URDF dung vi tri, nhung KHONG co khoi luong.
+  - name: livox_mid360
+    frame: mid360_link
+    mass: 0.265
+    xyz: [0.0, 0.0, 0.0]
+    source: datasheet
+
+  # --- Thiet bi tren lung: router + quat tan nhiet + gia bat ---
+  # KHOI LUONG: 1.98 kg, hieu chuan tu phep do
+  #     38.6 (do duoc) - 35.115 (URDF) - 1.240 (tay) - 0.265 (lidar) = 1.98
+  # Nguoi dung xac nhan "khoang 2 kg" - khop.
+  #
+  # VI TRI: nguoi dung cho biet chia LAM HAI cho, "giua lung" va "sau gay".
+  # Truoc day mo hinh dat ca cum o mot diem [-0.12, 0, 0.15] (chi la giua lung).
+  # Chia 1:1 la GIA DINH - chua can rieng tung cum.
+  #
+  # Moc hinh hoc trong he torso_link: vai o z=+0.238, mid360 (tren dau) z=+0.406.
+  # Nen "sau gay" ~ z=+0.33, "giua lung" ~ z=+0.12; x am la ve phia sau.
+  #
+  # DA KIEM CHUNG doc lap: so CoM mo hinh voi TAM AP LUC do tu mo-men khop chan
+  # (phep do nay khong dung mo hinh than tren nen la trong tai doc lap).
+  # Lech x 1.2 mm, y 4.1 mm tren 2206 mau - tuc mo hinh khoi luong da dung den
+  # vai mm. Doi 2 kg di 10 cm chi lam CoM doi 5.2 mm, nen vi tri z cua tai
+  # KHONG anh huong dang ke den tinh hoc; no chi vao quan tinh va dong luc hoc.
+  - name: back_equipment_mid
+    frame: torso_link
+    mass: 0.99
+    xyz: [-0.10, 0.0, 0.12]
+    source: nguoi_dung_mo_ta + hieu_chuan_tu_do_luong
+
+  - name: back_equipment_nape
+    frame: torso_link
+    mass: 0.99
+    xyz: [-0.08, 0.0, 0.33]
+    source: nguoi_dung_mo_ta + hieu_chuan_tu_do_luong

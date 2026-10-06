@@ -57,6 +57,13 @@ SECONDARY_AMP  = np.array([0, 0, 0.8, 0.4, 0, 0, 0])
 SECONDARY_FREQ = 0.25    # Hz
 NULL_GAIN      = 0.05    # ty le "keo nhe" ve tu the phu (KHONG phai van toc truc tiep)
 
+# Doi thanh True de TAI HIEN LOI windup trong null space (xem docstring).
+# True : dq_null la mot VAN TOC tuy y -> bi kep tran MAX_STEP gan nhu ca nua
+#        chu ky -> an het ngan sach cua IK -> tay troi khoi diem bam.
+# False: dq_null = ty le nho cua "con thieu bao nhieu" -> tu tat khi dat.
+BUG = False
+err_max, n_sat, n_step = 0.0, 0, 0
+
 with mujoco.viewer.launch_passive(model, data) as viewer:
     while viewer.is_running():
         step_start = time.time()
@@ -77,11 +84,17 @@ with mujoco.viewer.launch_passive(model, data) as viewer:
         # --- Uu tien 2: keo NHE ve mot TU THE PHU dao dong, loc qua null space ---
         Jpinv = J.T @ np.linalg.solve(A, np.eye(3))
         N = np.eye(7) - Jpinv @ J                                     # (7,7) ma tran chieu
-        q_null_target = q_base + SECONDARY_AMP * np.sin(2*np.pi*SECONDARY_FREQ*t)
-        delta = q_null_target - q_des_arm                              # con thieu bao nhieu
-        dq_null = N @ (NULL_GAIN * delta)                               # ty le nho, da loc qua N
+        wave = SECONDARY_AMP * np.sin(2*np.pi*SECONDARY_FREQ*t)
+        if BUG:
+            dq_null = N @ wave                            # SAI: dung thang lam van toc
+        else:
+            delta = (q_base + wave) - q_des_arm           # con thieu bao nhieu
+            dq_null = N @ (NULL_GAIN * delta)             # DUNG: ty le nho, tu tat khi dat
 
         dq = GAIN * dq_ik + dq_null
+        if np.any(np.abs(dq) > MAX_STEP):
+            n_sat += 1
+        n_step += 1
         q_des_arm = np.clip(q_des_arm + np.clip(dq, -MAX_STEP, MAX_STEP), lo, hi)
 
         ctrl = q_ref.copy()
@@ -91,8 +104,11 @@ with mujoco.viewer.launch_passive(model, data) as viewer:
         mujoco.mj_step(model, data)
         viewer.sync()
 
+        err_max = max(err_max, np.linalg.norm(err))
         if int(t*500) % 250 == 0:   # in moi 0.5s
-            print(f"t={t:5.1f}s  sai_so_tay={np.linalg.norm(err)*1000:5.1f}mm  "
+            print(f"[{'BUG' if BUG else 'FIX'}] t={t:5.1f}s  "
+                  f"sai_so_tay={np.linalg.norm(err)*1000:6.1f}mm  max={err_max*1000:6.1f}mm  "
+                  f"buoc_kep_tran={100*n_sat/max(n_step,1):3.0f}%  "
                   f"elbow={q_des_arm[3]:+.2f}rad  shoulder_yaw={q_des_arm[2]:+.2f}rad")
 
         dt = model.opt.timestep - (time.time() - step_start)

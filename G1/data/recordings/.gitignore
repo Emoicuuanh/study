@@ -1,0 +1,5 @@
+# Ban ghi tho khong dua vao git (moi ban 40s ~ 10 MB, git khong hop de giu).
+# Nhung van nam TRONG REPO chu khong o /tmp - /tmp bi xoa khi khoi dong lai
+# va da tung lam mat toan bo du lieu do mot buoi.
+*.npz
+!.gitignore
