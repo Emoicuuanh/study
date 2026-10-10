@@ -1,0 +1,4 @@
+# Bag ROS2 (LiDAR + IMU) - moi phut ~ vai tram MB, khong hop de giu trong git.
+# Nhung van nam TRONG REPO chu khong o /tmp (xem ../recordings/.gitignore).
+*
+!.gitignore
